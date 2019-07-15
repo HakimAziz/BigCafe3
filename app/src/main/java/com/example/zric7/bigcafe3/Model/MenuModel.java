@@ -4,15 +4,34 @@ package com.example.zric7.bigcafe3.Model;
 inisiasikan token2 dari data table
 */
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class MenuModel {
-    public String id_produk;
-    public String id_kategori;
-    public String nama;
-    public String deskripsi;
-    public String foto;
-    public String harga_modal;
-    public String harga_jual;
-    public String stok;
+    @SerializedName("id_produk")
+    @Expose
+    private String id_produk;
+    @SerializedName("id_kategori")
+    @Expose
+    private String id_kategori;
+    @SerializedName("nama")
+    @Expose
+    private String nama;
+    @SerializedName("deskripsi")
+    @Expose
+    private String deskripsi;
+    @SerializedName("foto")
+    @Expose
+    private String foto;
+    @SerializedName("harga_modal")
+    @Expose
+    private String harga_modal;
+    @SerializedName("harga_jual")
+    @Expose
+    private String harga_jual;
+    @SerializedName("stok")
+    @Expose
+    private String stok;
 
     public String getId_produk() {
         return id_produk;

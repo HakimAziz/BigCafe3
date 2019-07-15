@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.zric7.bigcafe3.Adapter.MenuAdapter;
 import com.example.zric7.bigcafe3.Model.MenuModel;
@@ -66,21 +68,24 @@ public class beMenuActivity extends AppCompatActivity {
     }
 
     private void getMenu() {
-        Call<MenuValue> call = apiInterface.getMenu();  /*Panggil method request ke webservice*/
-        call.enqueue(new Callback<MenuValue>() {
+        Call<MenuValue> jsonData = apiInterface.getMenu();  /*Panggil method request ke webservice*/
+        jsonData.enqueue(new Callback<MenuValue>() {
             @Override
             public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
-                String status = response.body().getStatus();
+                int status = response.body().getStatus();
                 progressBar.setVisibility(View.GONE);
-                if (status.equals("1")) {
-                    menuModelList = response.body().getMenuModelList();
+                if (status==1) {
+                    menuModelList = response.body().getResult();
                     menuAdapter = new MenuAdapter(beMenuActivity.this, menuModelList);
                     recyclerView.setAdapter(menuAdapter);
+                    Toast.makeText(beMenuActivity.this, "berhasil", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(beMenuActivity.this, "eror", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<MenuValue> call, Throwable t) {
-
+                Toast.makeText(beMenuActivity.this, "gagal response", Toast.LENGTH_SHORT).show();
             }
         });
     }

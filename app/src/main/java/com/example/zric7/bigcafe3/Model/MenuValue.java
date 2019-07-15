@@ -1,5 +1,8 @@
 package com.example.zric7.bigcafe3.Model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /*
@@ -8,31 +11,31 @@ Tangkap & inisiasikan respon Json dari web service
 */
 
 public class MenuValue {
-    String status;
-    String message;
-    List<MenuModel> menuModelList;
+    @SerializedName("status")
+    @Expose
+    private Integer status;
+    @SerializedName("result")
+    @Expose
+    private List<MenuModel> result = null;
+//    @SerializedName("status")
+//    String status;
+//    @SerializedName("message")
+//    String message;
+//    List<MenuModel> menuModelList;
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public List<MenuModel> getResult() {
+        return result;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public List<MenuModel> getMenuModelList() {
-        return menuModelList;
-    }
-
-    public void setMenuModelList(List<MenuModel> menuModelList) {
-        this.menuModelList = menuModelList;
+    public void setResult(List<MenuModel> result) {
+        this.result = result;
     }
 }

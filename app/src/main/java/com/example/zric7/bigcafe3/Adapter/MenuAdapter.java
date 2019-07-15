@@ -6,10 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.ContentValues.TAG;
+import static com.example.zric7.bigcafe3.Utils.common.BASE_URL;
 
 /*
 ==> untuk menampilkan data ke dalam RecyclerView
@@ -43,22 +46,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         MenuModel result = menuModelList.get(position);
         holder.TextViewNama.setText(result.getNama());
-        holder.TextViewHargaJual.setText(result.getHarga_jual());
-        holder.TextViewFoto.setText(result.getFoto());
+        holder.TextViewHargaJual.setText(new StringBuilder("Rp ").append(result.getHarga_jual()).toString());
+        holder.TextViewStok.setText(result.getStok());
+        Picasso.get()
+                .load(BASE_URL+"foto/"+result.getFoto())
+                .into(holder.ImageViewFoto);
     }
 
     @Override
     public int getItemCount() {
-//        //your problem is here because you are printing size of list which is null,
-//        //so instead of that check the null first, then use the list object
-//        if (menuModelList == null)
-//            Log.d(TAG, "null list");
-//        else
-//            Log.d(TAG, "getItemCount: list DATA-----" + menuModelList.size());
-//
-//        //**Here I'm getting Null Pointer exception**
-//        return menuModelList == null ? 0 : menuModelList.size();
-
         return menuModelList.size();
     }
 
@@ -67,7 +63,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
 
         @BindView(R.id.txt_nama) TextView TextViewNama;
         @BindView(R.id.txt_harga) TextView TextViewHargaJual;
-        @BindView(R.id.txt_foto) TextView TextViewFoto;
+        @BindView(R.id.txt_stok) TextView TextViewStok;
+        @BindView(R.id.img_foto_menu) ImageView ImageViewFoto;
+
 
         public ViewHolder(View itemView) {
             super(itemView);

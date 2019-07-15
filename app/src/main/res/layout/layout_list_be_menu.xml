@@ -6,72 +6,109 @@
     card_view:cardCornerRadius="5dp"
     card_view:cardElevation="5dp"
     card_view:cardUseCompatPadding="true">
-    <TableLayout
+
+    <!--<TableLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<TableRow>-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/img_foto_menu"-->
+                <!--android:text="kolom foto"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_column="3" />-->
+
+            <!--<TableRow >-->
+                <!--<TableRow>-->
+                    <!--<TextView-->
+                        <!--android:id="@+id/txt_nama"-->
+                        <!--android:text="kolom data- baris Nama"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@android:color/black" />-->
+                <!--</TableRow>-->
+
+                <!--<TableRow>-->
+                    <!--<TextView-->
+                        <!--android:id="@+id/txt_harga"-->
+                        <!--android:text="kolom data- baris Harga"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@android:color/black" />/>-->
+                <!--</TableRow>-->
+                <!--<TableRow>-->
+                    <!--<TextView-->
+                        <!--android:id="@+id/txt_harga1"-->
+                        <!--android:text="kolom data- baris coba"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="@android:color/black" />/>-->
+                <!--</TableRow>-->
+
+            <!--</TableRow>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txt_stok"-->
+                <!--android:text="kolom stok"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_column="3"-->
+                <!--android:textColor="@android:color/black" />-->
+        <!--</TableRow>-->
+
+    <!--</TableLayout>-->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content">
 
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:text="Nama" />
+        <ImageView
+            android:id="@+id/img_foto_menu"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:text=" : " />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_nama"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"/>
-        </TableRow>
-
-        <TableRow>
-            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:text="harga" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:text=" : " />
+                android:layout_height="40dp"
+                android:text="Nama Menu"
+                android:textSize="10pt" />
 
             <TextView
                 android:id="@+id/txt_harga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"/>
-        </TableRow>
-
-
-        <TableRow>
-            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:text="Foto" />
+                android:layout_height="40dp"
+                android:text="Rp 50.000,-" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:text=" : " />
+                android:layout_height="40dp"
+                android:text="Stok :"
+                android:textSize="8pt" />
 
             <TextView
-                android:id="@+id/txt_foto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"/>
-        </TableRow>
+                android:id="@+id/txt_stok"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="15 porsi" />
+        </LinearLayout>
 
-    </TableLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>
