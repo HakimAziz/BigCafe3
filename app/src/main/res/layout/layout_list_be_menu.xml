@@ -7,59 +7,6 @@
     card_view:cardElevation="5dp"
     card_view:cardUseCompatPadding="true">
 
-    <!--<TableLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<TableRow>-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/img_foto_menu"-->
-                <!--android:text="kolom foto"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_column="3" />-->
-
-            <!--<TableRow >-->
-                <!--<TableRow>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/txt_nama"-->
-                        <!--android:text="kolom data- baris Nama"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="@android:color/black" />-->
-                <!--</TableRow>-->
-
-                <!--<TableRow>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/txt_harga"-->
-                        <!--android:text="kolom data- baris Harga"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="@android:color/black" />/>-->
-                <!--</TableRow>-->
-                <!--<TableRow>-->
-                    <!--<TextView-->
-                        <!--android:id="@+id/txt_harga1"-->
-                        <!--android:text="kolom data- baris coba"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:textColor="@android:color/black" />/>-->
-                <!--</TableRow>-->
-
-            <!--</TableRow>-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/txt_stok"-->
-                <!--android:text="kolom stok"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_column="3"-->
-                <!--android:textColor="@android:color/black" />-->
-        <!--</TableRow>-->
-
-    <!--</TableLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -83,7 +30,7 @@
                 android:textSize="10pt" />
 
             <TextView
-                android:id="@+id/txt_harga"
+                android:id="@+id/txt_harga_jual"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="Rp 50.000,-" />
@@ -106,6 +53,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="15 porsi" />
+
+            <TextView
+                android:id="@+id/txt_id_produk"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Id Produk gk keliatan"/>
+
+            <TextView
+                android:id="@+id/txt_deskripsi"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="deskripsi gk keliatan"/>
+
+            <TextView
+                android:id="@+id/txt_harga_modal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="harga modal gk keliatan"/>
+
+            <TextView
+                android:id="@+id/txt_kategori"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="harga modal gk keliatan"/>
         </LinearLayout>
 
 
