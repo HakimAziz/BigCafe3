@@ -3,11 +3,13 @@ package com.example.zric7.bigcafe3;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class beMenuActivity extends AppCompatActivity {
+public class beMenuActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     ApiInterface apiInterface;
     List<MenuModel> menuModelList = new ArrayList<>();
@@ -88,12 +90,15 @@ public class beMenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        getMenu();
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMenu();
+    }
 
+//    ==============================
+//    Method Menampilkan daftar data menu
+//    ==============================
     private void getMenu() {
         Call<MenuValue> jsonData = apiInterface.getMenu();  /*Panggil method request ke webservice*/
         jsonData.enqueue(new Callback<MenuValue>() {
@@ -117,4 +122,51 @@ public class beMenuActivity extends AppCompatActivity {
         });
     }
 
+
+
+    //    ==============================
+//    Method Search Bar -> utk nyari menu
+//    ==============================
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Cari Menu");
+        searchView.setIconified(false);
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        recyclerView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        Call<MenuValue> jsonData = apiInterface.searchMenu(newText);  /*Panggil method request ke webservice*/
+
+        jsonData.enqueue(new Callback<MenuValue>() {
+            @Override
+            public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
+                int status = response.body().getStatus();
+                recyclerView.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                if (status==1) {
+                    menuModelList = response.body().getResult();
+                    menuAdapter = new MenuAdapter(beMenuActivity.this, menuModelList);
+                    recyclerView.setAdapter(menuAdapter);
+                }
+            }
+            @Override
+            public void onFailure(Call<MenuValue> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+        return true;
+    }
 }

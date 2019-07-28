@@ -52,6 +52,10 @@ public interface ApiInterface {
     @POST("deletemenu.php")
     Call<MenuValue> deleteMenu(@Field("id_produk") String id_produk);
 
+    @FormUrlEncoded
+    @POST("searchmenu.php")
+    Call<MenuValue> searchMenu(@Field("search") String searchw);
+
 
     //    //    Tampilin Data berdasarkan id yg di klik
 //    @POST("getmenubyid.php")         /*method request ke web service, lalu Model mana yg menangkapnya*/
