@@ -3,24 +3,28 @@ package com.example.zric7.bigcafe3;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.zric7.bigcafe3.Adapter.MenuAdapter;
+//import com.example.zric7.bigcafe3.Adapter.MenuAdapter;
+import com.example.zric7.bigcafe3.Adapter.OrderMainAdapter;
+import com.example.zric7.bigcafe3.Database.DataSource.CartRepository;
+import com.example.zric7.bigcafe3.Database.Local.CartDataSource;
+import com.example.zric7.bigcafe3.Database.Local.CartDatabase;
 import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.Model.MenuValue;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 import com.example.zric7.bigcafe3.Utils.common;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,53 +36,49 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class beMenuActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class OrderMainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     ApiInterface apiInterface;
     List<MenuModel> menuModelList = new ArrayList<>();
-    MenuAdapter menuAdapter;
+    OrderMainAdapter orderMainAdapter;
 
-    @BindView(R.id.recyclerView) RecyclerView recyclerView;
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
+    NotificationBadge badge; //notif cart
+    ImageView cart_icon;
 
-    // inisialisasi fab
-    private FloatingActionButton fab;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
-
-    //   =======> Saat halaman jalan... (onCreate)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_be_menu);
+        setContentView(R.layout.activity_order_main);
+
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Daftar menu");
+        getSupportActionBar().setTitle("Order menu");
 
-        menuAdapter = new MenuAdapter(this, menuModelList);
+        orderMainAdapter = new OrderMainAdapter(this, menuModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(menuAdapter);
-
-//        Inisiasi Tombol FAB
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        FontDrawable drawable = new FontDrawable(this, R.string.fa_plus_solid, true, false);
-        drawable.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-        fab.setImageDrawable(drawable);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(beMenuActivity.this, beMenuAddActivity.class));
-            }
-        });
+        recyclerView.setAdapter(orderMainAdapter);
 
 //        Panggil method untuk nampilin daftar menu
         getMenu();
+
+        //Init Database
+        initDB();
     }
-    //   ==================================
+
+    private void initDB() {
+        common.cartDatabase = CartDatabase.getInstance(this);
+        common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(common.cartDatabase.cartDAO()));
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,9 +94,10 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
     protected void onResume() {
         super.onResume();
         getMenu();
+
     }
 
-//    ==============================
+    //    ==============================
 //    Method Menampilkan daftar data menu
 //    ==============================
     private void getMenu() {
@@ -108,21 +109,19 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
                 progressBar.setVisibility(View.GONE);
                 if (status==1) {
                     menuModelList = response.body().getResult();
-                    menuAdapter = new MenuAdapter(beMenuActivity.this, menuModelList);
-                    recyclerView.setAdapter(menuAdapter);
+                    orderMainAdapter = new OrderMainAdapter(OrderMainActivity.this, menuModelList);
+                    recyclerView.setAdapter(orderMainAdapter);
 //                    Toast.makeText(beMenuActivity.this, "berhasil", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(beMenuActivity.this, "eror", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderMainActivity.this, "eror", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<MenuValue> call, Throwable t) {
-                Toast.makeText(beMenuActivity.this, "gagal response", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderMainActivity.this, "gagal response", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
 
     //    ==============================
 //    Method Search Bar -> utk nyari menu
@@ -135,7 +134,34 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
         searchView.setQueryHint("Cari Menu");
         searchView.setIconified(true);
         searchView.setOnQueryTextListener(this);
+
+        View view = menu.findItem(R.id.cart_menu).getActionView();
+        badge = (NotificationBadge)view.findViewById(R.id.badge);
+        cart_icon = (ImageView) view.findViewById(R.id.cart_icon);
+        cart_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OrderMainActivity.this, CartActivity.class));
+            }
+        });
+        updateCartCount();
+
         return true;
+    }
+
+    private void updateCartCount() {
+        if(badge == null) return;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(common.cartRepository.countCartItems() == 0)
+                    badge.setVisibility(View.INVISIBLE);
+                else {
+                    badge.setVisibility(View.VISIBLE);
+                    badge.setText(String.valueOf(common.cartRepository.countCartItems()));
+                }
+            }
+        });
     }
 
     @Override
@@ -158,8 +184,8 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
                 progressBar.setVisibility(View.GONE);
                 if (status==1) {
                     menuModelList = response.body().getResult();
-                    menuAdapter = new MenuAdapter(beMenuActivity.this, menuModelList);
-                    recyclerView.setAdapter(menuAdapter);
+                    orderMainAdapter = new OrderMainAdapter(OrderMainActivity.this, menuModelList);
+                    recyclerView.setAdapter(orderMainAdapter);
                 }
             }
             @Override
@@ -168,5 +194,11 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
             }
         });
         return true;
+    }
+
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

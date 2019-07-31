@@ -18,8 +18,16 @@ public class MainActivity extends AppCompatActivity {
     }
 //    ===========================
 
+    public void on_kelola_menu(View view) {
+        startActivity(new Intent(this, beMenuActivity.class));
+    }
+
+    public void on_order_menu(View view) {
+        startActivity(new Intent(this, OrderMainActivity.class));
+    }
+
     //    Jika klik Btn_login
-    public void login(View view) {
+    public void on_list_order(View view) {
         startActivity(new Intent(this, beMenuActivity.class));
     }
 

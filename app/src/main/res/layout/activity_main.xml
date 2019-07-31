@@ -13,62 +13,26 @@
         android:text="Hello World!" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_kelola_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="login"
-        android:text="login buat liat" />
+        android:onClick="on_kelola_menu"
+        android:text="Kelola Menu" />
 
-    <!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--&gt;-->
+    <Button
+        android:id="@+id/btn_order_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="on_order_menu"
+        android:text="Order Menu" />
 
-        <!--<ImageView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="80dp"-->
-            <!--android:layout_weight="1"/>-->
+    <Button
+        android:id="@+id/btn_list_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="on_list_order"
+        android:text="List Order" />
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="2"-->
-            <!--android:padding="10dp"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:textSize="10pt"-->
-                <!--android:textColor="black"-->
-                <!--android:text="Nama Menu"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:text="Rp 50.000,-"/>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:padding="10dp"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:textSize="8pt"-->
-                <!--android:text="Stok :"/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:text="15 porsi"/>-->
-        <!--</LinearLayout>-->
-
-
-    <!--</LinearLayout>-->
 
 
 </LinearLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="5dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_foto_menu"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+        <TextView
+            android:id="@+id/txt_foto_menu"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="nama foto gk keliatan"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_nama"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Nama Menu"
+                android:textSize="10pt" />
+
+            <TextView
+                android:id="@+id/txt_harga_jual"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Rp 50.000,-" />
+            <TextView
+                android:id="@+id/txt_harga_jual_polos"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:text="Rp 50.000,- cuma anggka" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_stok"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="15 porsi" />
+
+            <TextView
+                android:id="@+id/txt_id_produk"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Id Produk gk keliatan"/>
+
+            <TextView
+                android:id="@+id/txt_deskripsi"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="deskripsi gk keliatan"/>
+
+            <TextView
+                android:id="@+id/txt_harga_modal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="harga modal gk keliatan"/>
+
+            <TextView
+                android:id="@+id/txt_kategori"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="harga modal gk keliatan"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

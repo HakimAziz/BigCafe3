@@ -48,4 +48,15 @@ dependencies {
     //    Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+//    elegant - number counter
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
+
+//    Badge notif - buat cart
+    implementation 'com.nex3z:notification-badge:1.0.2'
+
+//    room database - Buat DAO simpen local data cart
+    implementation 'android.arch.persistence.room:runtime:1.1.0'
+    implementation 'android.arch.persistence.room:rxjava2:1.1.0'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.0'
+
 }
