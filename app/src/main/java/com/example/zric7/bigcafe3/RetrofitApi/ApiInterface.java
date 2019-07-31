@@ -60,4 +60,13 @@ public interface ApiInterface {
     //    //    Tampilin Data berdasarkan id yg di klik
 //    @POST("getmenubyid.php")         /*method request ke web service, lalu Model mana yg menangkapnya*/
 //    Call<MenuValue> getMenuById(@Field("id_produk") String id_produk);
+
+    @FormUrlEncoded
+    @POST("addorder.php")
+    Call<String> addOrder(
+            @Field("status_order") String status_order,
+            @Field("pemesan") String pemesan,
+            @Field("detail") String detail,
+            @Field("total_harga") Integer total_harga,
+            );
 }

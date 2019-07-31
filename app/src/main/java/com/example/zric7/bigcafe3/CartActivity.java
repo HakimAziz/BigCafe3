@@ -73,6 +73,13 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         ItemTouchHelper.SimpleCallback simpleCallback=new RecyclerItemTouchHelper(0,ItemTouchHelper.LEFT,this);
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recycler_cart);
 
+        btn_place_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                placeOrder();
+            }
+        });
+
 //        Panggil method untuk nampilin daftar menu
         loadCartItems();
 
@@ -111,6 +118,18 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         recycler_cart.setAdapter(cartAdapter);
     }
 
+
+    //    ==============================
+//    Method Submit Order Cart ke database server
+//    ==============================
+    private void placeOrder() {
+        //show alert dialog
+    }
+
+
+    //    ==============================
+//    Method pada item list
+//    ==============================
     @Override
     protected void onResume() {
         super.onResume();
