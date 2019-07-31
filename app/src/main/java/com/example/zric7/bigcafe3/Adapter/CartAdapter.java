@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
@@ -83,11 +85,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         @BindView(R.id.txt_qty)
         ElegantNumberButton ENBQty;
 
+        public @BindView(R.id.view_background)
+        RelativeLayout view_background;
+        public @BindView(R.id.view_foreground)
+        LinearLayout view_foreground;
+
 
         public CartViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
         }
+    }
+    public void removeItem(int position)
+    {
+        cartList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Cart item, int position)
+    {
+        cartList.add(position,item);
+        notifyItemInserted(position);
     }
 }

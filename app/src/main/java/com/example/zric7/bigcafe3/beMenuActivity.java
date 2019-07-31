@@ -129,7 +129,7 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
 //    ==============================
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.menu_search_be, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setQueryHint("Cari Menu");
