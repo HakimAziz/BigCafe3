@@ -28,6 +28,9 @@ public class Cart {
     @ColumnInfo(name = "qty")
     public int qty;
 
-    @ColumnInfo(name = "price")
-    public double price;
+    @ColumnInfo(name = "price_item")
+    public int price_item;
+
+    @ColumnInfo(name = "price_total")
+    public int price_total;
 }

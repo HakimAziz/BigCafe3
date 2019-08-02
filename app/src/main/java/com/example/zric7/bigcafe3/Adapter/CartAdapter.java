@@ -1,7 +1,9 @@
 package com.example.zric7.bigcafe3.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Cart result = cartList.get(position);
 //        holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.name);
-        holder.TextViewHargaJual.setText(new StringBuilder("Rp ").append(result.price).toString());
+        holder.TextViewHargaJual.setText(new StringBuilder("@Rp ").append(result.price_item).toString());
         holder.ENBQty.setNumber(String.valueOf(result.qty));
 
         Picasso.get()
@@ -57,10 +59,41 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.ENBQty.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-                Cart result = cartList.get(position);
-                result.qty  = newValue;
 
-                common.cartRepository.updateCart(result);
+//                klo Qty nya jadi 0.. maka delete item dari cart
+                if (newValue==0){
+                    Cart result = cartList.get(position);
+                    String name = result.name;
+
+                    final Cart deletedItem = result;
+                    final int deletedIndex = position;
+
+                    // Delete item from adapter
+                    removeItem(deletedIndex);
+
+                    //Delete item from Room Database
+                    common.cartRepository.deleteCartItem(deletedItem);
+
+                    Snackbar snackbar = Snackbar.make(view, new StringBuilder(name).append(" removed from favorites list").toString(),
+                            Snackbar.LENGTH_LONG);
+                    snackbar.setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            restoreItem(deletedItem, deletedIndex);
+                            common.cartRepository.insertToCart(deletedItem);
+
+                        }
+                    });
+                    snackbar.setActionTextColor(Color.YELLOW);
+                    snackbar.show();
+
+//                else --------------
+                }else {
+                    Cart result = cartList.get(position);
+                    result.qty  = newValue;
+
+                    common.cartRepository.updateCart(result);
+                }
             }
         });
     }

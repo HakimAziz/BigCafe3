@@ -106,14 +106,14 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
 
         @Override
         public void onClick(View view) {
-            final String id_produk    = TextViewIdProduk.getText().toString();
-            String nama         = TextViewNama.getText().toString();
-            String deskripsi    = TextViewDeskripsi.getText().toString();
-            String foto         = TextViewFotoMenu.getText().toString();
-            String harga_modal  = TextViewHargaModal.getText().toString();
-            final String harga_jual   = TextViewHargaJual_polos.getText().toString();
-            String stok         = TextViewStok.getText().toString();
-            String id_kategori  = TextViewId_kategori.getText().toString();
+            final String id_produk      = TextViewIdProduk.getText().toString();
+            final String nama           = TextViewNama.getText().toString();
+            final String deskripsi            = TextViewDeskripsi.getText().toString();
+            final String foto                 = TextViewFotoMenu.getText().toString();
+            final String harga_modal          = TextViewHargaModal.getText().toString();
+            final String harga_jual     = TextViewHargaJual_polos.getText().toString();
+            final String stok                 = TextViewStok.getText().toString();
+            final String id_kategori          = TextViewId_kategori.getText().toString();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View itemView = LayoutInflater.from(context)
@@ -144,11 +144,12 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
                     //Add to SQLite
                     try {
                         Cart cartItem = new Cart();
-                        cartItem.id     = Integer.parseInt(TextViewIdProduk.getText().toString());
-                        cartItem.foto   = TextViewFotoMenu.getText().toString();
-                        cartItem.name   = txt_product_name.getText().toString();
+                        cartItem.id     = Integer.parseInt(id_produk);
+                        cartItem.foto   = foto;
+                        cartItem.name   = nama;
                         cartItem.qty    = Integer.parseInt(numberQty);
-                        cartItem.price  = total_harga;
+                        cartItem.price_item     = Integer.parseInt(harga_jual);
+                        cartItem.price_total = total_harga;
 
                         //Add to DB
                         common.cartRepository.insertToCart(cartItem);
