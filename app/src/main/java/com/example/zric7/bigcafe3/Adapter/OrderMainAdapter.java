@@ -139,12 +139,12 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
                     dialogInterface.dismiss();
 
                     final String numberQty = txt_count.getNumber();
-                    final double total_harga = (Double.parseDouble(harga_jual) * Double.parseDouble(numberQty));
+                    final Integer total_harga = (Integer.parseInt(harga_jual) * Integer.parseInt(numberQty));
 
                     //Add to SQLite
                     try {
                         Cart cartItem = new Cart();
-//                        cartItem.id     = id_produk;
+                        cartItem.id     = Integer.parseInt(TextViewIdProduk.getText().toString());
                         cartItem.foto   = TextViewFotoMenu.getText().toString();
                         cartItem.name   = txt_product_name.getText().toString();
                         cartItem.qty    = Integer.parseInt(numberQty);
@@ -157,7 +157,8 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
 
                         Toast.makeText(context, "Save item to cart success", Toast.LENGTH_LONG).show();
                     }catch (Exception ex) {
-                        Toast.makeText(context,ex.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Menu sudah ada di Cart",Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context,ex.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 }
             });

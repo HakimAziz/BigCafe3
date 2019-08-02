@@ -67,6 +67,6 @@ public interface ApiInterface {
             @Field("status_order") String status_order,
             @Field("pemesan") String pemesan,
             @Field("detail") String detail,
-            @Field("total_harga") Integer total_harga,
+            @Field("total_harga") Integer total_harga
             );
 }

@@ -1,17 +1,25 @@
 package com.example.zric7.bigcafe3;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -24,6 +32,7 @@ import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 import com.example.zric7.bigcafe3.Utils.RecyclerItemTouchHelper;
 import com.example.zric7.bigcafe3.Utils.RecyclerItemTouchHelperListner;
 import com.example.zric7.bigcafe3.Utils.common;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,17 +46,17 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
 
 public class CartActivity extends AppCompatActivity implements RecyclerItemTouchHelperListner{
 
-//    ApiInterface apiInterface;
-//    List<Cart> cartList = new ArrayList<>();
-//    CartAdapter cartAdapter;
+    ApiInterface apiInterface;
+    List<Cart> cartList = new ArrayList<>();
+    CartAdapter cartAdapter;
 
     //Rxjava -> Collection of the disposables
 
-    List<Cart> cartList = new ArrayList<>();
-    CartAdapter cartAdapter;
+    String pemesan;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -62,6 +71,8 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        apiInterface = common.getAPI(); /*Koneksi ke interface API*/
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -124,6 +135,139 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 //    ==============================
     private void placeOrder() {
         //show alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Submit Order");
+
+        View submitOrderLayout = LayoutInflater.from(this).inflate(R.layout.layout_submit_order, null);
+
+
+        final RadioButton rdi_meja_1    = submitOrderLayout.findViewById(R.id.rdi_meja_1);
+        final RadioButton rdi_meja_2    = submitOrderLayout.findViewById(R.id.rdi_meja_2);
+        final RadioButton rdi_meja_3    = submitOrderLayout.findViewById(R.id.rdi_meja_3);
+        final RadioButton rdi_meja_4    = submitOrderLayout.findViewById(R.id.rdi_meja_4);
+        final RadioButton rdi_other     = submitOrderLayout.findViewById(R.id.rdi_other);
+
+        final EditText edt_other        = submitOrderLayout.findViewById(R.id.edt_other);
+
+        //Event
+        rdi_meja_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    edt_other.setEnabled(false);
+            }
+        });
+        rdi_meja_2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    edt_other.setEnabled(false);
+            }
+        });
+        rdi_meja_3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    edt_other.setEnabled(false);
+            }
+        });
+        rdi_meja_4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    edt_other.setEnabled(false);
+            }
+        });
+        rdi_other.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    edt_other.setEnabled(true);
+            }
+        });
+
+        builder.setView(submitOrderLayout);
+
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                pemesan = null;
+
+                if (rdi_meja_1.isChecked())
+                    pemesan = rdi_meja_1.getText().toString();
+                else if (rdi_meja_2.isChecked())
+                    pemesan = rdi_meja_2.getText().toString();
+                else if (rdi_meja_3.isChecked())
+                    pemesan = rdi_meja_3.getText().toString();
+                else if (rdi_meja_4.isChecked())
+                    pemesan = rdi_meja_4.getText().toString();
+                else if (rdi_other.isChecked())
+                    pemesan = edt_other.getText().toString();
+                else
+                    pemesan = "";
+
+                // Submit Order
+                compositeDisposable.add(
+                        common.cartRepository.getCartItems()
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .subscribe(new Consumer<List<Cart>>() {
+                                    @Override
+                                    public void accept(List<Cart> carts) throws Exception {
+                                        if (!TextUtils.isEmpty(pemesan))
+                                            sendOrderToServer(
+                                                    pemesan,
+                                                    carts,
+                                                    common.cartRepository.sumPrice()
+                                                    );
+                                        else
+                                            Toast.makeText(CartActivity.this, "Pemesan Cant Be Empty", Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+
+                                    }
+                                })
+                );
+
+
+            }
+        });
+        builder.show();
+    }
+
+    private void sendOrderToServer(String pemesan, List<Cart> carts, int sumPrice) {
+        if(carts.size()>0)
+        {
+            String status       = "ordered";
+            String detail       = new Gson().toJson(carts);
+            Integer total_harga = sumPrice;
+
+            apiInterface.addOrder(status,pemesan,detail,total_harga)
+                    .enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
+
+                            //Clear cart
+                            common.cartRepository.emptyCart();
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.i("ERROR_submitOrder",t.getMessage());
+                            Toast.makeText(CartActivity.this, "Order Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
 
