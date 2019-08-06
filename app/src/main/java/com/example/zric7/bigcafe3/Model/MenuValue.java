@@ -11,17 +11,13 @@ Tangkap & inisiasikan respon Json dari web service
 */
 
 public class MenuValue {
+
     @SerializedName("status")
     @Expose
     private Integer status;
     @SerializedName("result")
     @Expose
     private List<MenuModel> result = null;
-//    @SerializedName("status")
-//    String status;
-//    @SerializedName("message")
-//    String message;
-//    List<MenuModel> menuModelList;
 
     public Integer getStatus() {
         return status;
@@ -38,4 +34,11 @@ public class MenuValue {
     public void setResult(List<MenuModel> result) {
         this.result = result;
     }
+
+//    @SerializedName("status")
+//    String status;
+//    @SerializedName("message")
+//    String message;
+//    List<MenuModel> menuModelList;
+
 }

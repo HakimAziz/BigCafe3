@@ -1,6 +1,7 @@
 package com.example.zric7.bigcafe3;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -104,7 +105,7 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
         Call<MenuValue> jsonData = apiInterface.getMenu();  /*Panggil method request ke webservice*/
         jsonData.enqueue(new Callback<MenuValue>() {
             @Override
-            public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
+            public void onResponse(@NonNull Call<MenuValue> call,@NonNull Response<MenuValue> response) {
                 int status = response.body().getStatus();
                 progressBar.setVisibility(View.GONE);
                 if (status==1) {
@@ -178,7 +179,7 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
 
         jsonData.enqueue(new Callback<MenuValue>() {
             @Override
-            public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
+            public void onResponse(@NonNull Call<MenuValue> call, @NonNull Response<MenuValue> response) {
                 int status = response.body().getStatus();
                 recyclerView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);

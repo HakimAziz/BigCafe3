@@ -11,15 +11,12 @@ public class MenuModel {
     @SerializedName("id_produk")
     @Expose
     private String id_produk;
-    @SerializedName("id_kategori")
+    @SerializedName("kategori")
     @Expose
-    private String id_kategori;
+    private String kategori;
     @SerializedName("nama")
     @Expose
     private String nama;
-    @SerializedName("deskripsi")
-    @Expose
-    private String deskripsi;
     @SerializedName("foto")
     @Expose
     private String foto;
@@ -29,9 +26,9 @@ public class MenuModel {
     @SerializedName("harga_jual")
     @Expose
     private String harga_jual;
-    @SerializedName("stok")
+    @SerializedName("ket")
     @Expose
-    private String stok;
+    private String ket;
 
     public String getId_produk() {
         return id_produk;
@@ -41,12 +38,12 @@ public class MenuModel {
         this.id_produk = id_produk;
     }
 
-    public String getId_kategori() {
-        return id_kategori;
+    public String getKategori() {
+        return kategori;
     }
 
-    public void setId_kategori(String id_kategori) {
-        this.id_kategori = id_kategori;
+    public void setKategori(String kategori) {
+        this.kategori = kategori;
     }
 
     public String getNama() {
@@ -55,14 +52,6 @@ public class MenuModel {
 
     public void setNama(String nama) {
         this.nama = nama;
-    }
-
-    public String getDeskripsi() {
-        return deskripsi;
-    }
-
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
     }
 
     public String getFoto() {
@@ -89,11 +78,13 @@ public class MenuModel {
         this.harga_jual = harga_jual;
     }
 
-    public String getStok() {
-        return stok;
+    public String getKet() {
+        return ket;
     }
 
-    public void setStok(String stok) {
-        this.stok = stok;
+    public void setKet(String ket) {
+        this.ket = ket;
     }
+
 }
+

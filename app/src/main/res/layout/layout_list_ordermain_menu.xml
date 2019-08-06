@@ -15,11 +15,6 @@
             android:id="@+id/img_foto_menu"
             android:layout_width="80dp"
             android:layout_height="80dp"/>
-        <TextView
-            android:id="@+id/txt_foto_menu"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="nama foto gk keliatan"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -43,7 +38,7 @@
                 android:id="@+id/txt_harga_jual_polos"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:text="Rp 50.000,- cuma anggka" />
+                android:text="Cuma angka" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,10 +48,16 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txt_stok"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="15 porsi" />
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Status :"
+                android:textSize="8pt" />
+
+            <TextView
+                android:id="@+id/txt_ket"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Tidak Tersedia" />
 
             <TextView
                 android:id="@+id/txt_id_produk"
@@ -65,22 +66,22 @@
                 android:text="Id Produk gk keliatan"/>
 
             <TextView
-                android:id="@+id/txt_deskripsi"
+                android:id="@+id/txt_foto_menu"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="deskripsi gk keliatan"/>
+                android:text="gk keliatan"/>
 
             <TextView
                 android:id="@+id/txt_harga_modal"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="harga modal gk keliatan"/>
+                android:text="gk keliatan"/>
 
             <TextView
                 android:id="@+id/txt_kategori"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="harga modal gk keliatan"/>
+                android:text="gk keliatan"/>
         </LinearLayout>
 
 

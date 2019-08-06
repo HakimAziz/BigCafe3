@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -32,29 +33,24 @@ public class beMenuAddActivity extends AppCompatActivity {
     ApiInterface apiInterface;
 
     private RadioButton radioKategoriButton;
+    private RadioButton radioKetButton;
     private ProgressDialog progress;
-//
-//    @BindView(R.id.edit_txt_id_produk)
-//    EditText editTextIdProduk;
-    @BindView(R.id.edit_txt_nama)
-    EditText editTextNama;
-    @BindView(R.id.edit_txt_deskripsi)
-    EditText editTextDeskripsi;
-    @BindView(R.id.edit_txt_foto)
-    EditText editTextFoto;
-    @BindView(R.id.edit_txt_harga_modal)
-    EditText editTextHargaModal;
-    @BindView(R.id.edit_txt_harga_jual)
-    EditText editTextHargaJual;
-    @BindView(R.id.edit_txt_stok)
-    EditText editTextStok;
-    @BindView(R.id.radio_g_kategori)
-    RadioGroup radioGroupKategori;
-    @BindView(R.id.radio_makanan)
-    RadioButton radioMakanan;
-    @BindView(R.id.radio_minuman)
-    RadioButton radioMinuman;
 
+    @BindView(R.id.edt_id_produk)EditText editTextIdProduk;
+    @BindView(R.id.edt_nama)EditText editTextNama;
+    @BindView(R.id.img_foto_edit)ImageView imgFoto;
+    @BindView(R.id.edt_harga_modal)EditText editTextHargaModal;
+    @BindView(R.id.edt_harga_jual)EditText editTextHargaJual;
+
+    @BindView(R.id.radio_g_kategori)RadioGroup radioGroupKategori;
+    @BindView(R.id.radio_makanan)RadioButton radioMakanan;
+    @BindView(R.id.radio_minuman)RadioButton radioMinuman;
+
+    @BindView(R.id.radio_g_ket)RadioGroup radioGroupKet;
+    @BindView(R.id.radio_tersedia)RadioButton radioTersedia;
+    @BindView(R.id.radio_tidak_tersedia)RadioButton radioTidakTersedia;
+
+//==================
     @OnClick(R.id.btn_add) void addMenu() {
         //membuat progress dialog
         progress = new ProgressDialog(this);
@@ -62,46 +58,36 @@ public class beMenuAddActivity extends AppCompatActivity {
         progress.setMessage("Loading ...");
         progress.show();
 
-        //mengambil data dari edittext & radio group
-        int selectedId = radioGroupKategori.getCheckedRadioButtonId();
-        radioKategoriButton = (RadioButton) findViewById(selectedId);
-
-        String id_kategori = radioKategoriButton.getText().toString();
-
-//        String id_produk = editTextIdProduk.getText().toString();
-        String nama         = editTextNama.getText().toString().trim();
-        String deskripsi    = editTextDeskripsi.getText().toString();
-        String foto         = editTextFoto.getText().toString();
+        //mengambil data dari edittext
+//        String id_produk    = editTextIdProduk.getText().toString();
+        String nama         = editTextNama.getText().toString();
+        String foto         = "ini foto";
         String harga_modal  = editTextHargaModal.getText().toString();
         String harga_jual   = editTextHargaJual.getText().toString();
-        String stok         = editTextStok.getText().toString();
-//
-//        progress.dismiss();
-//        Toast.makeText(beMenuAddActivity.this, nama+" "+deskripsi+foto+harga_jual+harga_modal+stok, Toast.LENGTH_LONG).show();
 
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("https://big-cafe.000webhostapp.com/big-cafe/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        int selectedkategori= radioGroupKategori.getCheckedRadioButtonId();
+        radioKategoriButton = (RadioButton) findViewById(selectedkategori);
+        String kategori     = radioKategoriButton.getText().toString();
+
+        int selectedKet     = radioGroupKategori.getCheckedRadioButtonId();
+        radioKetButton      = (RadioButton) findViewById(selectedKet);
+        String ket          = radioKetButton.getText().toString();
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
 
         Call<MenuValue> jsonData = apiInterface.addMenu(
-                id_kategori,
+                kategori,
                 nama,
-                deskripsi,
                 foto,
                 harga_modal,
                 harga_jual,
-                stok);  /*Panggil method request ke webservice*/
+                ket);  /*Panggil method request ke webservice*/
         jsonData.enqueue(new Callback<MenuValue>() {
             @Override
             public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
                 Integer status = response.body().getStatus();
                 progress.dismiss();
-                if (response.isSuccessful()) {
+                if (status==1) {
                     Toast.makeText(beMenuAddActivity.this, "bisa ", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(beMenuAddActivity.this, "gk bisa ", Toast.LENGTH_SHORT).show();

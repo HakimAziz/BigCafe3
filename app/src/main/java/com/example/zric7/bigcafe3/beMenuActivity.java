@@ -1,6 +1,7 @@
 package com.example.zric7.bigcafe3;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -112,11 +113,11 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
                     recyclerView.setAdapter(menuAdapter);
 //                    Toast.makeText(beMenuActivity.this, "berhasil", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(beMenuActivity.this, "eror", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(beMenuActivity.this, "error", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
-            public void onFailure(Call<MenuValue> call, Throwable t) {
+            public void onFailure( Call<MenuValue> call, Throwable t) {
                 Toast.makeText(beMenuActivity.this, "gagal response", Toast.LENGTH_SHORT).show();
             }
         });
@@ -152,7 +153,7 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
 
         jsonData.enqueue(new Callback<MenuValue>() {
             @Override
-            public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
+            public void onResponse(@NonNull Call<MenuValue> call,@NonNull Response<MenuValue> response) {
                 int status = response.body().getStatus();
                 recyclerView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
@@ -163,7 +164,7 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
                 }
             }
             @Override
-            public void onFailure(Call<MenuValue> call, Throwable t) {
+            public void onFailure(@NonNull Call<MenuValue> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
             }
         });

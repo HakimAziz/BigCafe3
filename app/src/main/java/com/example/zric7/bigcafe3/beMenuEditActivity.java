@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,29 +39,24 @@ public class beMenuEditActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
     List<MenuModel> menuModelList = new ArrayList<>(); /*(gak di pake)*/
+
     private RadioButton radioKategoriButton;
+    private RadioButton radioKetButton;
     private ProgressDialog progress;
 
-    @BindView(R.id.edit_txt_id_produk)
-    EditText editTextIdProduk;
-    @BindView(R.id.edit_txt_nama)
-    EditText editTextNama;
-    @BindView(R.id.edit_txt_deskripsi)
-    EditText editTextDeskripsi;
-    @BindView(R.id.edit_txt_foto)
-    EditText editTextFoto;
-    @BindView(R.id.edit_txt_harga_modal)
-    EditText editTextHargaModal;
-    @BindView(R.id.edit_txt_harga_jual)
-    EditText editTextHargaJual;
-    @BindView(R.id.edit_txt_stok)
-    EditText editTextStok;
-    @BindView(R.id.radio_g_kategori)
-    RadioGroup radioGroupKategori;
-    @BindView(R.id.radio_makanan)
-    RadioButton radioMakanan;
-    @BindView(R.id.radio_minuman)
-    RadioButton radioMinuman;
+    @BindView(R.id.edt_id_produk)EditText editTextIdProduk;
+    @BindView(R.id.edt_nama)EditText editTextNama;
+    @BindView(R.id.img_foto_edit)ImageView imgFoto;
+    @BindView(R.id.edt_harga_modal)EditText editTextHargaModal;
+    @BindView(R.id.edt_harga_jual)EditText editTextHargaJual;
+
+    @BindView(R.id.radio_g_kategori)RadioGroup radioGroupKategori;
+    @BindView(R.id.radio_makanan)RadioButton radioMakanan;
+    @BindView(R.id.radio_minuman)RadioButton radioMinuman;
+
+    @BindView(R.id.radio_g_ket)RadioGroup radioGroupKet;
+    @BindView(R.id.radio_tersedia)RadioButton radioTersedia;
+    @BindView(R.id.radio_tidak_tersedia)RadioButton radioTidakTersedia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,30 +72,31 @@ public class beMenuEditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String id_produk    = intent.getStringExtra("id_produk");
         String nama         = intent.getStringExtra("nama");
-        String deskripsi    = intent.getStringExtra("deskripsi");
-        String foto         = intent.getStringExtra("foto");
+//        String foto         = intent.getStringExtra("foto");
         String harga_modal  = intent.getStringExtra("harga_modal");
         String harga_jual   = intent.getStringExtra("harga_jual");
-        String stok         = intent.getStringExtra("stok");
-        String id_kategori  = intent.getStringExtra("id_kategori");
-
+        String ket          = intent.getStringExtra("ket");
+        String kategori     = intent.getStringExtra("kategori");
 
         editTextIdProduk.setText(id_produk);
         editTextNama.setText(nama);
-        editTextDeskripsi.setText(deskripsi);
-        editTextFoto.setText(foto);
+//        editTextFoto.setText(foto);
         editTextHargaModal.setText(harga_modal);
         editTextHargaJual.setText(harga_jual);
-        editTextStok.setText(stok);
 
-        if (id_kategori.equals("makanan")) {
+        if (kategori.equals("Makanan")) {
             radioMakanan.setChecked(true);
         } else {
             radioMinuman.setChecked(true);
         }
+        if (ket.equals("Tersedia")) {
+            radioTersedia.setChecked(true);
+        } else {
+            radioTidakTersedia.setChecked(true);
+        }
     }
 
-    @OnClick(R.id.btn_ubah) void updateMenu() {
+    @OnClick(R.id.btn_edit) void updateMenu() {
         //membuat progress dialog
         progress = new ProgressDialog(this);
         progress.setCancelable(false);
@@ -109,18 +106,26 @@ public class beMenuEditActivity extends AppCompatActivity {
         //mengambil data dari edittext
         String id_produk = editTextIdProduk.getText().toString();
         String nama = editTextNama.getText().toString();
-        String deskripsi = editTextDeskripsi.getText().toString();
         String foto = "ini foto";
         String harga_modal = editTextHargaModal.getText().toString();
         String harga_jual = editTextHargaJual.getText().toString();
-        String stok = editTextStok.getText().toString();
 
-        int selectedId = radioGroupKategori.getCheckedRadioButtonId();
-        // mencari id radio button
-        radioKategoriButton = (RadioButton) findViewById(selectedId);
-        String id_kategori = radioKategoriButton.getText().toString();
+        int selectedkategori= radioGroupKategori.getCheckedRadioButtonId();
+        radioKategoriButton = (RadioButton) findViewById(selectedkategori);
+        String kategori     = radioKategoriButton.getText().toString();
 
-        Call<MenuValue> jsonData = apiInterface.updateMenu(id_produk,id_kategori,nama,deskripsi,foto,harga_modal,harga_jual,stok);  /*Panggil method request ke webservice*/
+        int selectedKet     = radioGroupKategori.getCheckedRadioButtonId();
+        radioKetButton      = (RadioButton) findViewById(selectedKet);
+        String ket          = radioKetButton.getText().toString();
+
+        Call<MenuValue> jsonData = apiInterface.updateMenu(
+                id_produk,
+                kategori,
+                nama,
+                foto,
+                harga_modal,
+                harga_jual,
+                ket);  /*Panggil method request ke webservice*/
         jsonData.enqueue(new Callback<MenuValue>() {
             @Override
             public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
@@ -178,7 +183,6 @@ public class beMenuEditActivity extends AppCompatActivity {
                                             Toast.makeText(beMenuEditActivity.this, "gagal hapus", Toast.LENGTH_SHORT).show();
                                         }
                                     }
-
                                     @Override
                                     public void onFailure(Call<MenuValue> call, Throwable t) {
                                         t.printStackTrace();

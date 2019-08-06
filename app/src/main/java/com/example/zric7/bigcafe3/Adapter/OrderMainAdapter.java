@@ -59,18 +59,22 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
         holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.getNama());
         holder.TextViewHargaJual.setText(new StringBuilder("Rp ").append(result.getHarga_jual()).toString());
-        holder.TextViewStok.setText(result.getStok());
+        holder.TextViewKet.setText(result.getKet());
 
-        Picasso.get()
-                .load(BASE_URL+"foto/"+result.getFoto())
-                .into(holder.ImageViewFoto);
+        if (result.getFoto().isEmpty()) {
+            Picasso.get()
+                    .load(R.drawable.img_holder)
+                    .into(holder.ImageViewFoto);
+        } else{
+            Picasso.get()
+                    .load(result.getFoto())
+                    .into(holder.ImageViewFoto);
+        }
 
-        holder.TextViewFotoMenu.setText(result.getFoto());
-        holder.TextViewHargaJual_polos.setText(result.getHarga_jual());
-
+        holder.TextViewFoto.setText(result.getFoto());
         holder.TextViewHargaModal.setText(result.getHarga_modal());
-        holder.TextViewDeskripsi.setText(result.getDeskripsi());
-        holder.TextViewId_kategori.setText(result.getId_kategori());
+        holder.TextViewHargaJual_polos.setText(result.getHarga_jual());
+        holder.TextViewKategori.setText(result.getKategori());
     }
 
 
@@ -85,14 +89,13 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
 //Inisiasikan view2 utk menampilkan data
         @BindView(R.id.txt_id_produk) TextView TextViewIdProduk;
         @BindView(R.id.txt_nama) TextView TextViewNama;
-        @BindView(R.id.txt_deskripsi) TextView TextViewDeskripsi;
+        @BindView(R.id.txt_foto_menu) TextView TextViewFoto;
         @BindView(R.id.img_foto_menu) ImageView ImageViewFoto;
         @BindView(R.id.txt_harga_modal) TextView TextViewHargaModal;
         @BindView(R.id.txt_harga_jual) TextView TextViewHargaJual;
-        @BindView(R.id.txt_stok) TextView TextViewStok;
-        @BindView(R.id.txt_kategori) TextView TextViewId_kategori;
+        @BindView(R.id.txt_ket) TextView TextViewKet;
+        @BindView(R.id.txt_kategori) TextView TextViewKategori;
 
-        @BindView(R.id.txt_foto_menu) TextView TextViewFotoMenu;
         @BindView(R.id.txt_harga_jual_polos) TextView TextViewHargaJual_polos;
 
 
@@ -108,26 +111,31 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
         public void onClick(View view) {
             final String id_produk      = TextViewIdProduk.getText().toString();
             final String nama           = TextViewNama.getText().toString();
-            final String deskripsi            = TextViewDeskripsi.getText().toString();
-            final String foto                 = TextViewFotoMenu.getText().toString();
-            final String harga_modal          = TextViewHargaModal.getText().toString();
+            final String foto           = TextViewFoto.getText().toString();
+            final String harga_modal    = TextViewHargaModal.getText().toString();
             final String harga_jual     = TextViewHargaJual_polos.getText().toString();
-            final String stok                 = TextViewStok.getText().toString();
-            final String id_kategori          = TextViewId_kategori.getText().toString();
+            final String ket            = TextViewKet.getText().toString();
+            final String kategori       = TextViewKategori.getText().toString();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View itemView = LayoutInflater.from(context)
                     .inflate(R.layout.layout_add_to_cart,null);
 
-            ImageView img_product_dialog = (ImageView)itemView.findViewById(R.id.img_cart_product);
+            ImageView img_product_dialog    = (ImageView)itemView.findViewById(R.id.img_cart_product);
             final TextView txt_product_name = (TextView)itemView.findViewById(R.id.txt_cart_product_name);
-            TextView txt_product_harga = (TextView)itemView.findViewById(R.id.txt_cart_product_harga_jual);
+            TextView txt_product_harga      = (TextView)itemView.findViewById(R.id.txt_cart_product_harga_jual);
             final ElegantNumberButton txt_count = (ElegantNumberButton)itemView.findViewById(R.id.txt_count);
 
             //Set data
-            Picasso.get()
-                    .load(BASE_URL+"foto/"+foto)
-                    .into(img_product_dialog);
+            if (foto.isEmpty()) {
+                Picasso.get()
+                        .load(R.drawable.img_holder)
+                        .into(img_product_dialog);
+            } else{
+                Picasso.get()
+                        .load(foto)
+                        .into(img_product_dialog);
+            }
             txt_product_name.setText(nama);
             txt_product_harga.setText(harga_jual);
 
@@ -149,7 +157,7 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
                         cartItem.name   = nama;
                         cartItem.qty    = Integer.parseInt(numberQty);
                         cartItem.price_item     = Integer.parseInt(harga_jual);
-                        cartItem.price_total = total_harga;
+                        cartItem.price_total    = total_harga;
 
                         //Add to DB
                         common.cartRepository.insertToCart(cartItem);

@@ -15,6 +15,7 @@ import com.example.zric7.bigcafe3.R;
 import com.example.zric7.bigcafe3.beMenuEditActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,8 +32,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
 
     Context context;
     List<MenuModel> menuModelList;
-
-
 
     public MenuAdapter(Context context, List<MenuModel> vmenuModelList) {
         this.context = context;
@@ -52,20 +51,27 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.getNama());
         holder.TextViewHargaJual.setText(new StringBuilder("Rp ").append(result.getHarga_jual()).toString());
-        holder.TextViewStok.setText(result.getStok());
+        holder.TextViewKet.setText(result.getKet());
 
-        Picasso.get()
-                .load(BASE_URL+"foto/"+result.getFoto())
-                .into(holder.ImageViewFoto);
+        if (result.getFoto().isEmpty()) {
+            Picasso.get()
+                    .load(R.drawable.img_holder)
+                    .into(holder.ImageViewFoto);
+        } else{
+            Picasso.get()
+                    .load(result.getFoto())
+                    .into(holder.ImageViewFoto);
+        }
 
+        holder.TextViewFoto.setText(result.getFoto());
         holder.TextViewHargaModal.setText(result.getHarga_modal());
-        holder.TextViewDeskripsi.setText(result.getDeskripsi());
-        holder.TextViewId_kategori.setText(result.getId_kategori());
+        holder.TextViewKategori.setText(result.getKategori());
     }
 
 
     @Override
     public int getItemCount() {
+        if(menuModelList == null) return 0;
         return menuModelList.size();
     }
 
@@ -75,12 +81,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
 //Inisiasikan view2 utk menampilkan data
         @BindView(R.id.txt_id_produk) TextView TextViewIdProduk;
         @BindView(R.id.txt_nama) TextView TextViewNama;
-        @BindView(R.id.txt_deskripsi) TextView TextViewDeskripsi;
+        @BindView(R.id.txt_foto_menu) TextView TextViewFoto;
         @BindView(R.id.img_foto_menu) ImageView ImageViewFoto;
         @BindView(R.id.txt_harga_modal) TextView TextViewHargaModal;
         @BindView(R.id.txt_harga_jual) TextView TextViewHargaJual;
-        @BindView(R.id.txt_stok) TextView TextViewStok;
-        @BindView(R.id.txt_kategori) TextView TextViewId_kategori;
+        @BindView(R.id.txt_ket) TextView TextViewKet;
+        @BindView(R.id.txt_kategori) TextView TextViewKategori;
 
 
         public ViewHolder(View itemView) {
@@ -95,22 +101,20 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         public void onClick(View view) {
             String id_produk    = TextViewIdProduk.getText().toString();
             String nama         = TextViewNama.getText().toString();
-            String deskripsi    = TextViewDeskripsi.getText().toString();
-            String foto         = ImageViewFoto.toString();
+            String foto         = TextViewFoto.getText().toString();
             String harga_modal  = TextViewHargaModal.getText().toString();
             String harga_jual   = TextViewHargaJual.getText().toString();
-            String stok         = TextViewStok.getText().toString();
-            String id_kategori  = TextViewId_kategori.getText().toString();
+            String ket          = TextViewKet.getText().toString();
+            String kategori     = TextViewKategori.getText().toString();
 
             Intent i = new Intent(context, beMenuEditActivity.class);
             i.putExtra("id_produk", id_produk);
             i.putExtra("nama", nama);
-            i.putExtra("deskripsi", deskripsi);
             i.putExtra("foto", foto);
             i.putExtra("harga_modal", harga_modal);
             i.putExtra("harga_jual", harga_jual);
-            i.putExtra("stok", stok);
-            i.putExtra("id_kategori", id_kategori);
+            i.putExtra("ket", ket);
+            i.putExtra("kategori", kategori);
             context.startActivity(i);
         }
     }
