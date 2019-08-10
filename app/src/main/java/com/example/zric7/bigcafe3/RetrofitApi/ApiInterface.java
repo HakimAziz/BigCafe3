@@ -27,6 +27,12 @@ public interface ApiInterface {
     Call<MenuValue> getMenu();
 
     @FormUrlEncoded
+    @POST("getmenubykategori.php")
+    Call<MenuValue> getMenuByKategori(
+            @Field("kategori") String kategori
+    );
+
+    @FormUrlEncoded
     @POST("addmenu.php")
     Call<MenuValue> addMenu(
             @Field("kategori") String kategori,

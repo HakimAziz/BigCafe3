@@ -2,6 +2,7 @@ package com.example.zric7.bigcafe3;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import com.example.zric7.bigcafe3.Database.Local.CartDataSource;
 import com.example.zric7.bigcafe3.Database.Local.CartDatabase;
 import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.Model.MenuValue;
+import com.example.zric7.bigcafe3.Model.OrderValue;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 import com.example.zric7.bigcafe3.Utils.common;
 import com.nex3z.notificationbadge.NotificationBadge;
@@ -45,6 +48,7 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
 
     NotificationBadge badge; //notif cart
     ImageView cart_icon;
+    BottomNavigationView bottomNavigationView;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -69,8 +73,25 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(orderMainAdapter);
 
+        bottomNavigationView=findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (item.getItemId()==R.id.makanan)
+                {
+                    getMenuByKategori("makanan");
+                }else if (item.getItemId()==R.id.minuman)
+                {
+                    getMenuByKategori("minuman");
+                }
+                return true;
+            }
+        });
+
 //        Panggil method untuk nampilin daftar menu
-        getMenu();
+//        getMenuByKategori("makanan");
+//        getMenu();
 
         //Init Database
         initDB();
@@ -94,13 +115,38 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
     @Override
     protected void onResume() {
         super.onResume();
-        getMenu();
+//        getMenu();
 
     }
 
     //    ==============================
 //    Method Menampilkan daftar data menu
 //    ==============================
+    private void getMenuByKategori(String kategori) {
+        Call<MenuValue> jsonData = apiInterface.getMenuByKategori(kategori);  /*Panggil method request ke webservice*/
+        jsonData.enqueue(new Callback<MenuValue>() {
+            @Override
+            public void onResponse(@NonNull Call<MenuValue> call,@NonNull Response<MenuValue> response) {
+                int status = response.body().getStatus();
+                progressBar.setVisibility(View.GONE);
+                if (status==1) {
+                    menuModelList = response.body().getResult();
+                    orderMainAdapter = new OrderMainAdapter(OrderMainActivity.this, menuModelList);
+                    recyclerView.setAdapter(orderMainAdapter);
+                }else{
+                    Toast.makeText(OrderMainActivity.this, "eror", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<MenuValue> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Log.i("ERROR_LoadMenu", t.getMessage());
+                Toast.makeText(OrderMainActivity.this, "Load Menu Failed ", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+//    ========
     private void getMenu() {
         Call<MenuValue> jsonData = apiInterface.getMenu();  /*Panggil method request ke webservice*/
         jsonData.enqueue(new Callback<MenuValue>() {
