@@ -60,25 +60,25 @@ public class beMenuAddActivity extends AppCompatActivity {
 
         //mengambil data dari edittext
 //        String id_produk    = editTextIdProduk.getText().toString();
-        String nama         = editTextNama.getText().toString();
-        String foto         = "ini foto";
-        String harga_modal  = editTextHargaModal.getText().toString();
-        String harga_jual   = editTextHargaJual.getText().toString();
+        String nama         = editTextNama.getText().toString().trim();
+        String foto         = "ini foto".trim();
+        String harga_modal  = editTextHargaModal.getText().toString().trim();
+        String harga_jual   = editTextHargaJual.getText().toString().trim();
 
         int selectedkategori= radioGroupKategori.getCheckedRadioButtonId();
         radioKategoriButton = (RadioButton) findViewById(selectedkategori);
-        String kategori     = radioKategoriButton.getText().toString();
+        String kategori     = radioKategoriButton.getText().toString().trim();
 
         int selectedKet     = radioGroupKategori.getCheckedRadioButtonId();
         radioKetButton      = (RadioButton) findViewById(selectedKet);
-        String ket          = radioKetButton.getText().toString();
+        String ket          = radioKetButton.getText().toString().trim();
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
 
         Call<MenuValue> jsonData = apiInterface.addMenu(
                 kategori,
                 nama,
-                foto,
+//                foto,
                 harga_modal,
                 harga_jual,
                 ket);  /*Panggil method request ke webservice*/
@@ -97,7 +97,7 @@ public class beMenuAddActivity extends AppCompatActivity {
             public void onFailure(Call<MenuValue> call, Throwable t) {
                 progress.dismiss();
                 t.printStackTrace();
-                Toast.makeText(beMenuAddActivity.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(beMenuAddActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

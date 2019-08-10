@@ -1,5 +1,8 @@
 package com.example.zric7.bigcafe3.RetrofitApi;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,9 +15,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-//    Gson gson = new GsonBuilder()
-//            .setLenient()
-//            .create();
+
+    private static Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
 
     private static Retrofit retrofit = null;
     public static Retrofit getClient(String baseUrl)
@@ -22,7 +26,7 @@ public class ApiClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
 //                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }

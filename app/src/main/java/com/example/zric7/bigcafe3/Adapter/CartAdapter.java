@@ -52,9 +52,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.TextViewHargaJual.setText(new StringBuilder("@Rp ").append(result.price_item).toString());
         holder.ENBQty.setNumber(String.valueOf(result.qty));
 
-        Picasso.get()
-                .load(BASE_URL+"foto/"+result.foto)
-                .into(holder.ImageViewFoto);
+        if (result.foto.isEmpty()) {
+            Picasso.get()
+                    .load(R.drawable.img_holder)
+                    .into(holder.ImageViewFoto);
+        } else{
+            Picasso.get()
+                    .load(result.foto)
+                    .into(holder.ImageViewFoto);
+        }
 
         holder.ENBQty.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override

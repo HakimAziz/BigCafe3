@@ -1,6 +1,7 @@
 package com.example.zric7.bigcafe3.RetrofitApi;
 
 import com.example.zric7.bigcafe3.Model.MenuValue;
+import com.example.zric7.bigcafe3.Model.OrderModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -21,18 +22,18 @@ public interface ApiInterface {
     @GET("getmenu.php")         /*method request ke web service, lalu Model mana yg menangkapnya*/
     Call<MenuValue> getMenu();
 
-    @Multipart
+    @FormUrlEncoded
     @POST("addmenu.php")
     Call<MenuValue> addMenu(
             @Field("kategori") String kategori,
             @Field("nama") String nama,
-            @Field("foto") String foto,
+//            @Field("foto") String foto,
             @Field("harga_modal") String harga_modal,
             @Field("harga_jual") String harga_jual,
             @Field("ket") String ket
     );
 
-    @Multipart
+    @FormUrlEncoded
     @POST("updatemenu.php")
     Call<MenuValue> updateMenu(
             @Field("id_produk") String id_produk,
@@ -89,10 +90,10 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("addorder.php")
-    Call<String> addOrder(
-            @Field("status_order") String status_order,
+    Call<OrderModel> addOrder(
             @Field("pemesan") String pemesan,
             @Field("detail") String detail,
+            @Field("status_order") String status_order,
             @Field("total_harga") Integer total_harga
             );
 }

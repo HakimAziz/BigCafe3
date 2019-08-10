@@ -2,11 +2,10 @@ package com.example.zric7.bigcafe3;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -18,16 +17,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.zric7.bigcafe3.Adapter.CartAdapter;
-import com.example.zric7.bigcafe3.Adapter.OrderMainAdapter;
 import com.example.zric7.bigcafe3.Database.ModelDB.Cart;
-import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.Model.MenuValue;
+import com.example.zric7.bigcafe3.Model.OrderModel;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 import com.example.zric7.bigcafe3.Utils.RecyclerItemTouchHelper;
 import com.example.zric7.bigcafe3.Utils.RecyclerItemTouchHelperListner;
@@ -46,17 +44,14 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Field;
 
-public class CartActivity extends AppCompatActivity implements RecyclerItemTouchHelperListner{
+public class CartActivity extends AppCompatActivity implements RecyclerItemTouchHelperListner {
 
     ApiInterface apiInterface;
     List<Cart> cartList = new ArrayList<>();
     CartAdapter cartAdapter;
 
     //Rxjava -> Collection of the disposables
-
-    String pemesan;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
@@ -66,6 +61,12 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     RecyclerView recycler_cart;
     @BindView(R.id.btn_place_order)
     Button btn_place_order;
+    //
+//    @BindView(R.id.radio_g_pemesan)RadioGroup radioGroupPemesan;
+//    private RadioButton radioPemesanButton;
+//    String pemesan;
+    private RadioButton radioPemesanButton;
+    private String pemesan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         recycler_cart.setLayoutManager(new LinearLayoutManager(this));
         recycler_cart.setHasFixedSize(true);
 
-        ItemTouchHelper.SimpleCallback simpleCallback=new RecyclerItemTouchHelper(0,ItemTouchHelper.LEFT,this);
+        ItemTouchHelper.SimpleCallback simpleCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recycler_cart);
 
         btn_place_order.setOnClickListener(new View.OnClickListener() {
@@ -113,19 +114,19 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     private void loadCartItems() {
         compositeDisposable.add(
                 common.cartRepository.getCartItems()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Cart>>() {
-                    @Override
-                    public void accept(List<Cart> cartList) throws Exception {
-                        displayCartItem(cartList);
-                    }
-                }));
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<Cart>>() {
+                            @Override
+                            public void accept(List<Cart> cartList) throws Exception {
+                                displayCartItem(cartList);
+                            }
+                        }));
     }
 
     private void displayCartItem(List<Cart> carts) {
         cartList = carts;
-        cartAdapter = new CartAdapter(this,carts);
+        cartAdapter = new CartAdapter(this, carts);
         recycler_cart.setAdapter(cartAdapter);
     }
 
@@ -135,54 +136,27 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 //    ==============================
     private void placeOrder() {
         //show alert dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Submit Order");
 
         View submitOrderLayout = LayoutInflater.from(this).inflate(R.layout.layout_submit_order, null);
 
-
-        final RadioButton rdi_meja_1    = submitOrderLayout.findViewById(R.id.rdi_meja_1);
-        final RadioButton rdi_meja_2    = submitOrderLayout.findViewById(R.id.rdi_meja_2);
-        final RadioButton rdi_meja_3    = submitOrderLayout.findViewById(R.id.rdi_meja_3);
-        final RadioButton rdi_meja_4    = submitOrderLayout.findViewById(R.id.rdi_meja_4);
-        final RadioButton rdi_other     = submitOrderLayout.findViewById(R.id.rdi_other);
-
-        final EditText edt_other        = submitOrderLayout.findViewById(R.id.edt_other);
+        final RadioButton rdi_other         = submitOrderLayout.findViewById(R.id.rdi_other);
+        final EditText edt_other            = submitOrderLayout.findViewById(R.id.edt_other);
+        final RadioGroup radioGroupPemesan  = submitOrderLayout.findViewById(R.id.radio_g_pemesan);
 
         //Event
-        rdi_meja_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        radioGroupPemesan.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    edt_other.setEnabled(false);
-            }
-        });
-        rdi_meja_2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    edt_other.setEnabled(false);
-            }
-        });
-        rdi_meja_3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    edt_other.setEnabled(false);
-            }
-        });
-        rdi_meja_4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    edt_other.setEnabled(false);
-            }
-        });
-        rdi_other.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (rdi_other.isChecked()){
                     edt_other.setEnabled(true);
+                    pemesan = edt_other.getText().toString();
+                }else {
+                    edt_other.setEnabled(false);
+                    RadioButton checkedRadioButton = (RadioButton) radioGroupPemesan.findViewById(checkedId);
+                    pemesan = checkedRadioButton.getText().toString();
+                }
             }
         });
 
@@ -196,23 +170,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         }).setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                pemesan = null;
-
-                if (rdi_meja_1.isChecked())
-                    pemesan = rdi_meja_1.getText().toString();
-                else if (rdi_meja_2.isChecked())
-                    pemesan = rdi_meja_2.getText().toString();
-                else if (rdi_meja_3.isChecked())
-                    pemesan = rdi_meja_3.getText().toString();
-                else if (rdi_meja_4.isChecked())
-                    pemesan = rdi_meja_4.getText().toString();
-                else if (rdi_other.isChecked())
-                    pemesan = edt_other.getText().toString();
-                else
-                    pemesan = "";
-
-                // Submit Order
+//                 Submit Order
                 compositeDisposable.add(
                         common.cartRepository.getCartItems()
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -243,29 +201,42 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
         builder.show();
     }
 
-    private void sendOrderToServer(String pemesan, List<Cart> carts, int sumPrice) {
-        if(carts.size()>0)
-        {
-            String status       = "ordered";
-            String detail       = new Gson().toJson(carts);
-            Integer total_harga = sumPrice;
+    private void sendOrderToServer(final String pemesan, List<Cart> carts, int sumPrice) {
+        if (carts.size() > 0) {
 
-            apiInterface.addOrder(status,pemesan,detail,total_harga)
-                    .enqueue(new Callback<String>() {
+            final String detail         = new Gson().toJson(carts);
+            final String status_order   = "ordered";
+            final Integer total_harga   = sumPrice;
+
+            Call<OrderModel> jsonData =apiInterface.addOrder(
+                    pemesan,
+                    detail,
+                    status_order,
+                    total_harga);
+                    jsonData.enqueue(new Callback<OrderModel>() {
                         @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
+                        public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
                             Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
-
                             //Clear cart
                             common.cartRepository.emptyCart();
                             finish();
                         }
 
                         @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Log.i("ERROR_submitOrder",t.getMessage());
-                            Toast.makeText(CartActivity.this, "Order Failed", Toast.LENGTH_SHORT).show();
+                        public void onFailure(Call<OrderModel> call, Throwable t) {
+                            Log.i("ERROR_submitOrder", t.getMessage()+pemesan+status_order+detail+total_harga);
+                            Toast.makeText(CartActivity.this, "Order Failed ", Toast.LENGTH_SHORT).show();
                         }
+
+//                        @Override
+//                        public void onResponse(Call<String> call, Response<String> response) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<String> call, Throwable t) {
+//
+//                        }
                     });
         }
     }
@@ -294,7 +265,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if(viewHolder instanceof CartAdapter.CartViewHolder) {
+        if (viewHolder instanceof CartAdapter.CartViewHolder) {
             String name = cartList.get(viewHolder.getAdapterPosition()).name;
 
             final Cart deletedItem = cartList.get(viewHolder.getAdapterPosition());

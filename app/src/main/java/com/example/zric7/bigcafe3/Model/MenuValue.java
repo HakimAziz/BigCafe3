@@ -19,6 +19,8 @@ public class MenuValue {
     @Expose
     private List<MenuModel> result = null;
 
+
+
     public Integer getStatus() {
         return status;
     }
