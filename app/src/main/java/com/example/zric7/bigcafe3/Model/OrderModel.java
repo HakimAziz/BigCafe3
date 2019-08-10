@@ -4,11 +4,12 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class OrderModel {
-    public Integer getId_order() {
+
+    public String getId_order() {
         return id_order;
     }
 
-    public void setId_order(Integer id_order) {
+    public void setId_order(String id_order) {
         this.id_order = id_order;
     }
 
@@ -36,17 +37,17 @@ public class OrderModel {
         this.detail = detail;
     }
 
-    public Integer getTotal_harga() {
+    public String getTotal_harga() {
         return total_harga;
     }
 
-    public void setTotal_harga(Integer total_harga) {
+    public void setTotal_harga(String total_harga) {
         this.total_harga = total_harga;
     }
 
     @SerializedName("id_order")
     @Expose
-    private Integer id_order;
+    private String id_order;
     @SerializedName("status_order")
     @Expose
     private String status_order;
@@ -58,6 +59,6 @@ public class OrderModel {
     private String detail;
     @SerializedName("total_harga")
     @Expose
-    private Integer total_harga;
+    private String total_harga;
 
 }

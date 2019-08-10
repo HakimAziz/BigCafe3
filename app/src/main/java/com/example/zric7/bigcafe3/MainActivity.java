@@ -26,9 +26,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, OrderMainActivity.class));
     }
 
-    //    Jika klik Btn_login
     public void on_list_order(View view) {
-        startActivity(new Intent(this, beMenuActivity.class));
+        startActivity(new Intent(this, ShowOrderActivity.class));
     }
 
 }

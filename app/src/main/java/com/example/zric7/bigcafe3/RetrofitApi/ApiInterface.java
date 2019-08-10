@@ -2,7 +2,11 @@ package com.example.zric7.bigcafe3.RetrofitApi;
 
 import com.example.zric7.bigcafe3.Model.MenuValue;
 import com.example.zric7.bigcafe3.Model.OrderModel;
+import com.example.zric7.bigcafe3.Model.OrderValue;
 
+import java.util.List;
+
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -81,7 +85,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("searchmenu.php")
-    Call<MenuValue> searchMenu(@Field("search") String searchw);
+    Call<MenuValue> searchMenu(@Field("search") String search);
 
 
     //    //    Tampilin Data berdasarkan id yg di klik
@@ -90,10 +94,18 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("addorder.php")
-    Call<OrderModel> addOrder(
+    Call<OrderValue> addOrder(
             @Field("pemesan") String pemesan,
             @Field("detail") String detail,
             @Field("status_order") String status_order,
             @Field("total_harga") Integer total_harga
             );
+
+    //Order_tb api --------------------------
+
+    @FormUrlEncoded
+    @POST("getorder.php")
+    Call<OrderValue> getOrder(
+            @Field("status_order") String status_order
+    );
 }

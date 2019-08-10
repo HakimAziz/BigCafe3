@@ -118,7 +118,8 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
             }
             @Override
             public void onFailure( Call<MenuValue> call, Throwable t) {
-                Toast.makeText(beMenuActivity.this, "gagal response", Toast.LENGTH_SHORT).show();
+                Log.i("ERROR_LoadMenu", t.getMessage());
+                Toast.makeText(beMenuActivity.this, "Load Menu Failed ", Toast.LENGTH_SHORT).show();
             }
         });
     }

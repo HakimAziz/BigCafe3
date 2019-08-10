@@ -26,6 +26,7 @@ import com.example.zric7.bigcafe3.Adapter.CartAdapter;
 import com.example.zric7.bigcafe3.Database.ModelDB.Cart;
 import com.example.zric7.bigcafe3.Model.MenuValue;
 import com.example.zric7.bigcafe3.Model.OrderModel;
+import com.example.zric7.bigcafe3.Model.OrderValue;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 import com.example.zric7.bigcafe3.Utils.RecyclerItemTouchHelper;
 import com.example.zric7.bigcafe3.Utils.RecyclerItemTouchHelperListner;
@@ -208,14 +209,14 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             final String status_order   = "ordered";
             final Integer total_harga   = sumPrice;
 
-            Call<OrderModel> jsonData =apiInterface.addOrder(
+            Call<OrderValue> jsonData =apiInterface.addOrder(
                     pemesan,
                     detail,
                     status_order,
                     total_harga);
-                    jsonData.enqueue(new Callback<OrderModel>() {
+                    jsonData.enqueue(new Callback<OrderValue>() {
                         @Override
-                        public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
+                        public void onResponse(Call<OrderValue> call, Response<OrderValue> response) {
                             Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
                             //Clear cart
                             common.cartRepository.emptyCart();
@@ -223,20 +224,10 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
                         }
 
                         @Override
-                        public void onFailure(Call<OrderModel> call, Throwable t) {
-                            Log.i("ERROR_submitOrder", t.getMessage()+pemesan+status_order+detail+total_harga);
+                        public void onFailure(Call<OrderValue> call, Throwable t) {
+                            Log.i("ERROR_submitOrder", t.getMessage());
                             Toast.makeText(CartActivity.this, "Order Failed ", Toast.LENGTH_SHORT).show();
                         }
-
-//                        @Override
-//                        public void onResponse(Call<String> call, Response<String> response) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<String> call, Throwable t) {
-//
-//                        }
                     });
         }
     }
