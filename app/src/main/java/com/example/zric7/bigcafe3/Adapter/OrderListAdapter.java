@@ -1,49 +1,38 @@
 package com.example.zric7.bigcafe3.Adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.example.zric7.bigcafe3.Database.ModelDB.Cart;
-import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.Model.OrderModel;
 import com.example.zric7.bigcafe3.R;
-import com.example.zric7.bigcafe3.Utils.common;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShowOrderAdapter extends RecyclerView.Adapter<ShowOrderAdapter.ViewHolder> {
+public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.ViewHolder> {
     Context context;
     List<OrderModel> orderModelList;
 
-    public ShowOrderAdapter(Context context, List<OrderModel> vorderModelList) {
+    public OrderListAdapter(Context context, List<OrderModel> vorderModelList) {
         this.context = context;
         this.orderModelList = vorderModelList;
     }
 
     @Override
-    public ShowOrderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_show_order, parent, false);
-        ShowOrderAdapter.ViewHolder holder = new ShowOrderAdapter.ViewHolder(v);
+    public OrderListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list_orderlist, parent, false);
+        OrderListAdapter.ViewHolder holder = new OrderListAdapter.ViewHolder(v);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(ShowOrderAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(OrderListAdapter.ViewHolder holder, int position) {
         OrderModel result = orderModelList.get(position);
         holder.TextViewIdOrder.setText(new StringBuilder("#ID-").append(result.getId_order()).toString());
         holder.TextViewPemesan.setText(result.getPemesan());

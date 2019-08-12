@@ -10,39 +10,30 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.zric7.bigcafe3.Adapter.MenuAdapter;
-import com.example.zric7.bigcafe3.Adapter.OrderMainAdapter;
-import com.example.zric7.bigcafe3.Adapter.ShowOrderAdapter;
-import com.example.zric7.bigcafe3.Model.MenuModel;
-import com.example.zric7.bigcafe3.Model.MenuValue;
+import com.example.zric7.bigcafe3.Adapter.OrderListAdapter;
 import com.example.zric7.bigcafe3.Model.OrderModel;
 import com.example.zric7.bigcafe3.Model.OrderValue;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 import com.example.zric7.bigcafe3.Utils.common;
-import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowOrderActivity extends AppCompatActivity {
+public class OrderListActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
     List<OrderModel> orderModelList     = new ArrayList<>();
-    ShowOrderAdapter showOrderAdapter;
+    OrderListAdapter orderListAdapter;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     BottomNavigationView bottomNavigationView;
@@ -55,7 +46,7 @@ public class ShowOrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_order);
+        setContentView(R.layout.activity_order_list);
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
 
@@ -63,11 +54,11 @@ public class ShowOrderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Show Order");
 
-        showOrderAdapter = new ShowOrderAdapter(this, orderModelList);
+        orderListAdapter = new OrderListAdapter(this, orderModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(showOrderAdapter);
+        recyclerView.setAdapter(orderListAdapter);
 
         bottomNavigationView=findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -107,17 +98,17 @@ public class ShowOrderActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (status==1) {
                     orderModelList      = response.body().getResult();
-                    showOrderAdapter    = new ShowOrderAdapter(ShowOrderActivity.this, orderModelList);
-                    recyclerView.setAdapter(showOrderAdapter);
+                    orderListAdapter = new OrderListAdapter(OrderListActivity.this, orderModelList);
+                    recyclerView.setAdapter(orderListAdapter);
                 }else{
-                    Toast.makeText(ShowOrderActivity.this, "error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OrderListActivity.this, "error", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(@NonNull Call<OrderValue> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Log.i("ERROR_LoadOrder", t.getMessage());
-                Toast.makeText(ShowOrderActivity.this, "Load Order Failed ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderListActivity.this, "Load Order Failed ", Toast.LENGTH_SHORT).show();
             }
         });
     }

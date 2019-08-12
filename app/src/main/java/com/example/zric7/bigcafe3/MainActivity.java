@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import butterknife.OnClick;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void on_list_order(View view) {
-        startActivity(new Intent(this, ShowOrderActivity.class));
+        startActivity(new Intent(this, OrderListActivity.class));
     }
 
 }

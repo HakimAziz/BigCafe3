@@ -100,7 +100,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("addorder.php")
-    Call<OrderValue> addOrder(
+    Call<OrderModel> addOrder(
             @Field("pemesan") String pemesan,
             @Field("detail") String detail,
             @Field("status_order") String status_order,

@@ -152,11 +152,8 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (rdi_other.isChecked()){
                     edt_other.setEnabled(true);
-                    pemesan = edt_other.getText().toString();
                 }else {
                     edt_other.setEnabled(false);
-                    RadioButton checkedRadioButton = (RadioButton) radioGroupPemesan.findViewById(checkedId);
-                    pemesan = checkedRadioButton.getText().toString();
                 }
             }
         });
@@ -172,6 +169,14 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             @Override
             public void onClick(DialogInterface dialog, int which) {
 //                 Submit Order
+                if (rdi_other.isChecked()){
+                    pemesan = edt_other.getText().toString();
+                }else {
+                    int checkedId     = radioGroupPemesan.getCheckedRadioButtonId();
+                    RadioButton checkedRadioButton = (RadioButton) radioGroupPemesan.findViewById(checkedId);
+                    pemesan = checkedRadioButton.getText().toString();
+                }
+
                 compositeDisposable.add(
                         common.cartRepository.getCartItems()
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -209,23 +214,26 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             final String status_order   = "ordered";
             final Integer total_harga   = sumPrice;
 
-            Call<OrderValue> jsonData =apiInterface.addOrder(
+            Call<OrderModel> jsonData =apiInterface.addOrder(
                     pemesan,
                     detail,
                     status_order,
                     total_harga);
-                    jsonData.enqueue(new Callback<OrderValue>() {
+                    jsonData.enqueue(new Callback<OrderModel>() {
                         @Override
-                        public void onResponse(Call<OrderValue> call, Response<OrderValue> response) {
-                            Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
-                            //Clear cart
-                            common.cartRepository.emptyCart();
-                            finish();
+                        public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(CartActivity.this, "Order Submitted", Toast.LENGTH_SHORT).show();
+                                //Clear cart
+                                common.cartRepository.emptyCart();
+                                finish();
+                            }else { Toast.makeText(CartActivity.this, "Order gak sukses", Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         @Override
-                        public void onFailure(Call<OrderValue> call, Throwable t) {
-                            Log.i("ERROR_submitOrder", t.getMessage());
+                        public void onFailure(Call<OrderModel> call, Throwable t) {
+                            Log.i("ERROR_submitOrder", t.getMessage()+pemesan+status_order+detail+total_harga);
                             Toast.makeText(CartActivity.this, "Order Failed ", Toast.LENGTH_SHORT).show();
                         }
                     });

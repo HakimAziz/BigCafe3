@@ -23,7 +23,8 @@
         <activity android:name=".beMenuAddActivity" />
         <activity android:name=".OrderMainActivity" />
         <activity android:name=".CartActivity" />
-        <activity android:name=".ShowOrderActivity"></activity>
+        <activity android:name=".OrderListActivity" />
+        <activity android:name=".OrderDetailActivity"></activity>
     </application>
 
 </manifest>
