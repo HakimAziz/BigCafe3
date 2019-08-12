@@ -1,6 +1,7 @@
 package com.example.zric7.bigcafe3;
 
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -44,6 +45,7 @@ public class ShowOrderActivity extends AppCompatActivity {
     ShowOrderAdapter showOrderAdapter;
 
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    BottomNavigationView bottomNavigationView;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -66,6 +68,31 @@ public class ShowOrderActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(showOrderAdapter);
+
+        bottomNavigationView=findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (item.getItemId()==R.id.ordered)
+                {
+                    loadOrder("ordered");
+                }else if (item.getItemId()==R.id.ready)
+                {
+                    loadOrder("ready");
+                }else if (item.getItemId()==R.id.served)
+                {
+                    loadOrder("served");
+                }else if (item.getItemId()==R.id.paid)
+                {
+                    loadOrder("paid");
+                }else if (item.getItemId()==R.id.canceled)
+                {
+                    loadOrder("canceled");
+                }
+                return true;
+            }
+        });
 
         loadOrder("ordered");
 

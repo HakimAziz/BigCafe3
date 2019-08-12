@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/ordered"
+        android:enabled="true"
+        android:title="New Order"
+        />
+
+    <item
+        android:id="@+id/ready"
+        android:enabled="true"
+        android:title="Ready to Serve"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/served"
+        android:enabled="true"
+        android:title="Served"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/paid"
+        android:enabled="true"
+        android:title="Paid"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/canceled"
+        android:enabled="true"
+        android:title="Canceled"
+        app:showAsAction="ifRoom"
+        />
+
+
+
+</menu>

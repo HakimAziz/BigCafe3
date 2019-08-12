@@ -89,9 +89,7 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
             }
         });
 
-//        Panggil method untuk nampilin daftar menu
-//        getMenuByKategori("makanan");
-//        getMenu();
+        getMenuByKategori("makanan");
 
         //Init Database
         initDB();
@@ -142,30 +140,6 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
                 progressBar.setVisibility(View.GONE);
                 Log.i("ERROR_LoadMenu", t.getMessage());
                 Toast.makeText(OrderMainActivity.this, "Load Menu Failed ", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-//    ========
-    private void getMenu() {
-        Call<MenuValue> jsonData = apiInterface.getMenu();  /*Panggil method request ke webservice*/
-        jsonData.enqueue(new Callback<MenuValue>() {
-            @Override
-            public void onResponse(@NonNull Call<MenuValue> call,@NonNull Response<MenuValue> response) {
-                int status = response.body().getStatus();
-                progressBar.setVisibility(View.GONE);
-                if (status==1) {
-                    menuModelList = response.body().getResult();
-                    orderMainAdapter = new OrderMainAdapter(OrderMainActivity.this, menuModelList);
-                    recyclerView.setAdapter(orderMainAdapter);
-//                    Toast.makeText(beMenuActivity.this, "berhasil", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(OrderMainActivity.this, "eror", Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<MenuValue> call, Throwable t) {
-                Toast.makeText(OrderMainActivity.this, "gagal response", Toast.LENGTH_SHORT).show();
             }
         });
     }

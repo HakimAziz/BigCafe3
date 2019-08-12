@@ -25,6 +25,8 @@
         app:itemIconTint="@android:color/black"
         android:layout_width="match_parent"
         app:menu="@menu/bottommenu_kategori_menu"
-        android:layout_height="wrap_content"></android.support.design.widget.BottomNavigationView>
+        android:layout_height="wrap_content">
+
+    </android.support.design.widget.BottomNavigationView>
 
 </RelativeLayout>
