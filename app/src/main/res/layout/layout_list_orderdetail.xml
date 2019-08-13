@@ -1,0 +1,73 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="5dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_foto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_nama"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Nama Menu"
+                android:textSize="10pt" />
+
+            <TextView
+                android:id="@+id/txt_price_item"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Rp 50.000,-" />
+
+            <TextView
+                android:id="@+id/txt_price_total"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Rp 50.000,-" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Jumlah Pesanan :"
+                android:textSize="8pt" />
+
+            <TextView
+                android:id="@+id/txt_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="5 Porsi" />
+
+            <TextView
+                android:id="@+id/txt_id"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="Id Produk gk keliatan"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

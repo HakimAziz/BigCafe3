@@ -2,6 +2,7 @@ package com.example.zric7.bigcafe3.Utils;
 
 import com.example.zric7.bigcafe3.Database.DataSource.CartRepository;
 import com.example.zric7.bigcafe3.Database.Local.CartDatabase;
+import com.example.zric7.bigcafe3.Model.OrderModel;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiClient;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 
@@ -11,6 +12,7 @@ import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 public class common {
 
     public static final String BASE_URL = "https://big-cafe.000webhostapp.com/coba-rest-server/";
+
     public static ApiInterface getAPI()
     {
         return ApiClient.getClient(BASE_URL).create(ApiInterface.class);
@@ -21,5 +23,5 @@ public class common {
     public static CartRepository cartRepository;
 
     //Hold variabel
-
+    public static OrderModel orderClicked;
 }
