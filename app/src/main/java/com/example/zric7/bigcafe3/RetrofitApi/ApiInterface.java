@@ -114,4 +114,11 @@ public interface ApiInterface {
     Call<OrderValue> getOrder(
             @Field("status_order") String status_order
     );
+
+    @FormUrlEncoded
+    @POST("updateorderstatus.php")
+    Call<OrderValue> updateOrderStatus(
+            @Field("id_order") String id_order,
+            @Field("status_order") String status_order
+    );
 }

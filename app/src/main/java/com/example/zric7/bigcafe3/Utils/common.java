@@ -24,4 +24,6 @@ public class common {
 
     //Hold variabel
     public static OrderModel orderClicked;
+    public static String bottomNavItemActive;
+
 }

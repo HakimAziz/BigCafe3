@@ -68,25 +68,30 @@ public class OrderListActivity extends AppCompatActivity {
                 if (item.getItemId()==R.id.ordered)
                 {
                     loadOrder("ordered");
+                    common.bottomNavItemActive="ordered";
                 }else if (item.getItemId()==R.id.ready)
                 {
                     loadOrder("ready");
+                    common.bottomNavItemActive="ready";
                 }else if (item.getItemId()==R.id.served)
                 {
                     loadOrder("served");
+                    common.bottomNavItemActive="served";
                 }else if (item.getItemId()==R.id.paid)
                 {
                     loadOrder("paid");
+                    common.bottomNavItemActive="paid";
                 }else if (item.getItemId()==R.id.canceled)
                 {
                     loadOrder("canceled");
+                    common.bottomNavItemActive="canceled";
                 }
                 return true;
             }
         });
 
         loadOrder("ordered");
-
+        common.bottomNavItemActive="ordered";
     }
 
     private void loadOrder(String status_order) {
@@ -116,7 +121,7 @@ public class OrderListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        getOrder();
+        loadOrder(common.bottomNavItemActive);
     }
     @Override
     protected void onDestroy() {
