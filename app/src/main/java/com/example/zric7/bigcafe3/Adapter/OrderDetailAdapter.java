@@ -49,9 +49,10 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 //        final Cart result = cartList.get(position);
         holder.TextViewId.setText(new StringBuilder("#ID-").append(cartList.get(position).getId()).toString());
         holder.TextViewNama.setText(cartList.get(position).getName());
-//        holder.TextViewPriceItem.setText(cartList.get(position).getPrice_item());
-//        holder.TextViewPriceTotal.setText(cartList.get(position).getPrice_total());
-//        holder.TextViewQty.setText(cartList.get(position).getPrice_total());
+        holder.TextViewPriceItem.setText(new StringBuilder("@Rp ").append(cartList.get(position).getPrice_item()).append(" x "));
+        holder.TextViewPriceTotal.setText(new StringBuilder("Rp ").append(cartList.get(position).getPrice_total()));
+        holder.TextViewQty.setText(String.valueOf(cartList.get(position).getQty()));
+
 
         if (cartList.get(position).getFoto().isEmpty()) {
             Picasso.get()
@@ -78,8 +79,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         @BindView(R.id.txt_nama) TextView TextViewNama;
         @BindView(R.id.txt_price_item) TextView TextViewPriceItem;
         @BindView(R.id.txt_price_total) TextView TextViewPriceTotal;
-        @BindView(R.id.txt_qty) TextView TextViewQty;
         @BindView(R.id.img_foto) ImageView ImageViewFoto;
+        @BindView(R.id.txt_qty) TextView TextViewQty;
 
         public ViewHolder(View itemView) {
             super(itemView);

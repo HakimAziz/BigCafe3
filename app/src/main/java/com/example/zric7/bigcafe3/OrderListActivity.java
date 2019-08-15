@@ -52,7 +52,7 @@ public class OrderListActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Show Order");
+        getSupportActionBar().setTitle("Order List");
 
         orderListAdapter = new OrderListAdapter(this, orderModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());

@@ -115,14 +115,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public class CartViewHolder extends RecyclerView.ViewHolder {
 
         //Inisiasikan view2 utk menampilkan data
-        @BindView(R.id.txt_nama)
-        TextView TextViewNama;
-        @BindView(R.id.txt_harga_jual)
-        TextView TextViewHargaJual;
-        @BindView(R.id.img_foto_menu)
-        ImageView ImageViewFoto;
-        @BindView(R.id.txt_qty)
-        ElegantNumberButton ENBQty;
+        @BindView(R.id.txt_nama)TextView TextViewNama;
+        @BindView(R.id.txt_harga_jual)TextView TextViewHargaJual;
+        @BindView(R.id.img_foto_menu)ImageView ImageViewFoto;
+        @BindView(R.id.txt_qty)ElegantNumberButton ENBQty;
 
         public @BindView(R.id.view_background)
         RelativeLayout view_background;
