@@ -49,7 +49,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 //        final Cart result = cartList.get(position);
         holder.TextViewId.setText(new StringBuilder("#ID-").append(cartList.get(position).getId()).toString());
         holder.TextViewNama.setText(cartList.get(position).getName());
-        holder.TextViewPriceItem.setText(new StringBuilder("@Rp ").append(cartList.get(position).getPrice_item()).append(" x "));
+        holder.TextViewPriceItem.setText(new StringBuilder("@Rp ").append(cartList.get(position).getPrice_item()).append(" x"));
         holder.TextViewPriceTotal.setText(new StringBuilder("Rp ").append(cartList.get(position).getPrice_total()));
         holder.TextViewQty.setText(String.valueOf(cartList.get(position).getQty()));
 

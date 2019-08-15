@@ -49,13 +49,14 @@ public class OrderDetailActivity extends AppCompatActivity {
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    @BindView(R.id.txt_id_order)
-    TextView TextViewIdOrder;
-    @BindView(R.id.txt_vpemesan)
-    TextView TextViewPemesan;
+    @BindView(R.id.btn_pay)TextView ButtonViewPay;
+
+    @BindView(R.id.txt_id_order)TextView TextViewIdOrder;
+    @BindView(R.id.txt_vpemesan)TextView TextViewPemesan;
 //    @BindView(R.id.txt_detail) TextView TextViewDetail;
 //    @BindView(R.id.txt_status_order) TextView TextViewStatusOrder;
-//    @BindView(R.id.txt_total_harga) TextView TextViewTotalHarga;
+    @BindView(R.id.txt_total_harga) TextView TextViewTotalHarga;
+    @BindView(R.id.txt_time)TextView TextViewTimeStamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,14 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         TextViewIdOrder.setText(common.orderClicked.getId_order());
         TextViewPemesan.setText(common.orderClicked.getPemesan());
-        TextViewIdOrder.setText(common.orderClicked.getId_order());
+        TextViewTimeStamp.setText(common.orderClicked.getTime_stamp());
+        TextViewTotalHarga.setText(common.orderClicked.getTotal_harga());
+
+        if (common.bottomNavItemActive=="served"){
+            ButtonViewPay.setVisibility(View.VISIBLE);
+        }else {
+            ButtonViewPay.setVisibility(View.GONE);
+        }
     }
 
     @Override

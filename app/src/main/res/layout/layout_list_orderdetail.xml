@@ -2,11 +2,11 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="0.5dp"
+    android:layout_marginHorizontal="15dp"
     android:orientation="vertical"
     card_view:cardCornerRadius="0.5dp"
-    card_view:cardElevation="2dp"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginBottom="0.5dp">
+    card_view:cardElevation="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,60 +15,61 @@
 
         <ImageView
             android:id="@+id/img_foto"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/img_holder"/>
+            android:src="@drawable/img_holder" />
 
 
-            <TextView
-                android:id="@+id/txt_nama"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/img_foto"
-                android:layout_marginHorizontal="10dp"
-                android:text="Nama Menu"
-                android:textSize="20dp"/>
+        <TextView
+            android:id="@+id/txt_nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/img_foto"
+            android:layout_marginLeft="10dp"
 
-            <TextView
-                android:id="@+id/txt_price_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/img_foto"
-                android:layout_below="@id/txt_nama"
-                android:layout_margin="8dp"
-                android:text="_Rp 50.000  x" />
+            android:text="Nama Menu"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/txt_price_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_alignParentEnd="true"
-                android:textStyle="bold"
-                android:text="Rp 50.000,-" />
+        <TextView
+            android:id="@+id/txt_price_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_nama"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_toRightOf="@id/img_foto"
+            android:text="_Rp 50.000  x" />
 
-            <TextView
-                android:id="@+id/txt_qty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/txt_price_item"
-                android:layout_toRightOf="@id/txt_price_item"
-                android:layout_below="@id/txt_nama"
-                android:background="@drawable/bckg_round"
-                android:paddingVertical="5dp"
-                android:paddingHorizontal="10dp"
-                android:layout_marginVertical="10dp"
-                android:textStyle="bold"
-                android:text="5 Porsi" />
+        <TextView
+            android:id="@+id/txt_price_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:text="Rp 50.000,-"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txt_id"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="Id Produk gk keliatan"/>
+        <TextView
+            android:id="@+id/txt_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/txt_price_item"
+            android:layout_below="@id/txt_nama"
+            android:layout_marginVertical="0dp"
+            android:layout_toRightOf="@id/txt_price_item"
+            android:background="@drawable/bckg_round"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="5 Porsi"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_id"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Id Produk gk keliatan" />
     </RelativeLayout>
-
 
 
 </android.support.v7.widget.CardView>

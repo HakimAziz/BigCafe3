@@ -5,6 +5,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderModel {
 
+   @SerializedName("id_order")
+    @Expose
+    private String id_order;
+    @SerializedName("status_order")
+    @Expose
+    private String status_order;
+    @SerializedName("pemesan")
+    @Expose
+    private String pemesan;
+    @SerializedName("detail")
+    @Expose
+    private String detail;
+    @SerializedName("total_harga")
+    @Expose
+    private String total_harga;
+    @SerializedName("time_stamp")
+    @Expose
+    private String time_stamp;
+
+
     public String getId_order() {
         return id_order;
     }
@@ -45,20 +65,13 @@ public class OrderModel {
         this.total_harga = total_harga;
     }
 
-    @SerializedName("id_order")
-    @Expose
-    private String id_order;
-    @SerializedName("status_order")
-    @Expose
-    private String status_order;
-    @SerializedName("pemesan")
-    @Expose
-    private String pemesan;
-    @SerializedName("detail")
-    @Expose
-    private String detail;
-    @SerializedName("total_harga")
-    @Expose
-    private String total_harga;
+    public String getTime_stamp() {
+        return time_stamp;
+    }
+
+    public void setTime_stamp(String time_stamp) {
+        this.time_stamp = time_stamp;
+    }
+
 
 }
