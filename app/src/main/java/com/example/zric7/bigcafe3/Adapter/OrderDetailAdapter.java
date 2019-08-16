@@ -20,10 +20,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import org.fabiomsr.moneytextview.MoneyTextView;
+
+import java.text.NumberFormat;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.example.zric7.bigcafe3.Utils.common.localeID;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.ViewHolder> {
     Context context;
@@ -46,11 +51,12 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
     @Override
     public void onBindViewHolder(OrderDetailAdapter.ViewHolder holder, int position) {
+
 //        final Cart result = cartList.get(position);
         holder.TextViewId.setText(new StringBuilder("#ID-").append(cartList.get(position).getId()).toString());
         holder.TextViewNama.setText(cartList.get(position).getName());
-        holder.TextViewPriceItem.setText(new StringBuilder("@Rp ").append(cartList.get(position).getPrice_item()).append(" x"));
-        holder.TextViewPriceTotal.setText(new StringBuilder("Rp ").append(cartList.get(position).getPrice_total()));
+        holder.TextViewPriceItem.setText(new StringBuilder("@").append(common.formatRupiah.format((double)cartList.get(position).getPrice_item())).append("  x"));
+        holder.TextViewPriceTotal.setText(common.formatRupiah.format((double)cartList.get(position).getPrice_total()));
         holder.TextViewQty.setText(String.valueOf(cartList.get(position).getQty()));
 
 

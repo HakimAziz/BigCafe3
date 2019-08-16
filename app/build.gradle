@@ -52,6 +52,10 @@ dependencies {
 //    elegant - number counter
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
 
+//  format money text & edit view
+    implementation 'org.fabiomsr:moneytextview:1.1.0'
+    implementation 'me.abhinay.input:currency-edittext:1.1'
+
 //    Badge notif - buat cart
     implementation 'com.nex3z:notification-badge:1.0.2'
 
