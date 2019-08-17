@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderModel {
 
-   @SerializedName("id_order")
+    @SerializedName("id_order")
     @Expose
     private String id_order;
     @SerializedName("status_order")
@@ -23,7 +23,12 @@ public class OrderModel {
     @SerializedName("time_stamp")
     @Expose
     private String time_stamp;
-
+    @SerializedName("u_bayar")
+    @Expose
+    private String u_bayar;
+    @SerializedName("u_kembali")
+    @Expose
+    private String u_kembali;
 
     public String getId_order() {
         return id_order;
@@ -72,6 +77,25 @@ public class OrderModel {
     public void setTime_stamp(String time_stamp) {
         this.time_stamp = time_stamp;
     }
+
+    public String getU_bayar() {
+        return u_bayar;
+    }
+
+    public void setU_bayar(String u_bayar) {
+        this.u_bayar = u_bayar;
+    }
+
+    public String getU_kembali() {
+        return u_kembali;
+    }
+
+    public void setU_kembali(String u_kembali) {
+        this.u_kembali = u_kembali;
+    }
+
+
+
 
 
 }

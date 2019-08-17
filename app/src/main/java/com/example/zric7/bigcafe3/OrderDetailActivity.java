@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,12 +53,19 @@ public class OrderDetailActivity extends AppCompatActivity {
     TextView TextViewIdOrder;
     @BindView(R.id.txt_vpemesan)
     TextView TextViewPemesan;
-    //    @BindView(R.id.txt_detail) TextView TextViewDetail;
-//    @BindView(R.id.txt_status_order) TextView TextViewStatusOrder;
     @BindView(R.id.txt_total_harga)
     TextView TextViewTotalHarga;
     @BindView(R.id.txt_time)
     TextView TextViewTimeStamp;
+    @BindView(R.id.txt_u_bayar)
+    TextView TextViewUBayar;
+    @BindView(R.id.txt_u_kembali)
+    TextView TextViewUKembali;
+
+    @BindView(R.id.rl_u_bayar)
+    RelativeLayout RLuBayar;
+    @BindView(R.id.rl_u_kembalian)
+    RelativeLayout RLuKembalian;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +88,21 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextViewPemesan.setText(common.orderClicked.getPemesan());
         TextViewTimeStamp.setText(common.orderClicked.getTime_stamp());
         TextViewTotalHarga.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getTotal_harga())));
+        TextViewUBayar.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getU_bayar())));
+        TextViewUKembali.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getU_kembali())));
 
         if (common.bottomNavItemActive == "served") {
             ButtonViewCheckout.setVisibility(View.VISIBLE);
-        } else {
+            RLuBayar.setVisibility(View.GONE);
+            RLuKembalian.setVisibility(View.GONE);
+        } else if (common.bottomNavItemActive == "paid"){
             ButtonViewCheckout.setVisibility(View.GONE);
+            RLuBayar.setVisibility(View.VISIBLE);
+            RLuKembalian.setVisibility(View.VISIBLE);
+        }else {
+            ButtonViewCheckout.setVisibility(View.GONE);
+            RLuBayar.setVisibility(View.GONE);
+            RLuKembalian.setVisibility(View.GONE);
         }
     }
 
@@ -99,8 +117,6 @@ public class OrderDetailActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (common.bottomNavItemActive == "ordered") {
             getMenuInflater().inflate(R.menu.menu_orderdetail_cancel_order, menu);
-            getMenuInflater().inflate(R.menu.menu_orderdetail_edit_status, menu);
-        } else if (common.bottomNavItemActive == "ready") {
             getMenuInflater().inflate(R.menu.menu_orderdetail_edit_status, menu);
         } else if (common.bottomNavItemActive == "served") {
             getMenuInflater().inflate(R.menu.menu_orderdetail_edit_status, menu);
@@ -124,13 +140,11 @@ public class OrderDetailActivity extends AppCompatActivity {
 
             //=========event btn centang di klik
             case R.id.action_edit_statusorder:
-                if (common.bottomNavItemActive == "ordered") {
-                    dialogConfirmMenu(common.orderClicked.getId_order(), "ready");
-                } else if (common.bottomNavItemActive == "ready") {
+//                if (common.bottomNavItemActive == "ordered") {
                     dialogConfirmMenu(common.orderClicked.getId_order(), "served");
-                } else {
-                    dialogConfirmMenu(common.orderClicked.getId_order(), "paid");
-                }
+//                } else {
+//                    dialogConfirmMenu(common.orderClicked.getId_order(), "paid");
+//                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -185,8 +199,8 @@ public class OrderDetailActivity extends AppCompatActivity {
                 public void onResponse(Call<OrderValue> call, Response<OrderValue> response) {
                     Integer status = response.body().getStatus();
                     if (status == 1) {
-                        if (status_order == "ready") {
-                            Toast.makeText(OrderDetailActivity.this, "Ready to Serve", Toast.LENGTH_SHORT).show();
+                        if (status_order == "served") {
+                            Toast.makeText(OrderDetailActivity.this, "Served", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
                             Toast.makeText(OrderDetailActivity.this, status_order, Toast.LENGTH_SHORT).show();
@@ -211,7 +225,7 @@ public class OrderDetailActivity extends AppCompatActivity {
     @OnClick(R.id.btn_checkout)
     void payCheckout() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View itemView = LayoutInflater.from(this)
+        final View itemView = LayoutInflater.from(this)
                 .inflate(R.layout.layout_checkout_order, null);
 
         TextView textViewGrandTotal = (TextView) itemView.findViewById(R.id.txt_grand_total);
@@ -227,47 +241,122 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         builder.setView(itemView);
 
-        Button btn_pay = (Button)itemView.findViewById(R.id.btn_pay);
-        btn_pay.setOnClickListener(new View.OnClickListener()
-        {
+        Button btn_pay = (Button) itemView.findViewById(R.id.btn_pay);
+        btn_pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int grand_total = Integer.parseInt(common.orderClicked.getTotal_harga());
-                int cash        = edt_Cash.getCleanIntValue();
-                if (cash<grand_total){
+                int cash = edt_Cash.getCleanIntValue();
+                if (cash < grand_total) {
                     edt_Cash.setError("Not enough cash !");
-                }else{
-                    int change      = cash - grand_total;
-//                    showDialogPaySummaries();
-                    Toast.makeText(OrderDetailActivity.this, "kembalian "+change, Toast.LENGTH_LONG).show();
-                    finish();
+                } else {
+                    int change = cash - grand_total;
+                    showDialogPaySum(grand_total, cash, change);
                 }
             }
         });
         builder.show();
-
-
-//        builder.setPositiveButton("PAY", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                int grand_total = Integer.parseInt(common.orderClicked.getTotal_harga());
-//                int cash        = edt_Cash.getCleanIntValue();
-//                if (cash<grand_total){
-//                    edt_Cash.setError("Not enough cash !");
-//                }else{
-//                    int change      = cash - grand_total;
-////                    showDialogPaySummaries();
-//                    Toast.makeText(OrderDetailActivity.this, "kembalian "+change, Toast.LENGTH_LONG).show();
-//                    dialogInterface.dismiss();
-//                }
-//
-//                //Add to DBase
-////                [  ]
-//            }
-//        });
-
-
     }
 
+    private void showDialogPaySum(int total, final int cash, final int change) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View itemView = LayoutInflater.from(this)
+                .inflate(R.layout.layout_paysum_order, null);
+
+        TextView textViewGrandTotal = itemView.findViewById(R.id.txt_grand_total);
+        final TextView textViewCash = itemView.findViewById(R.id.txt_cash);
+        final TextView textViewChange = itemView.findViewById(R.id.txt_change);
+
+        //Set data
+        textViewGrandTotal.setText(common.formatRupiah.format(total));
+        textViewCash.setText(common.formatRupiah.format(cash));
+        textViewChange.setText(common.formatRupiah.format(change));
+
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                String id_order     = common.orderClicked.getId_order();
+                String u_bayar      = String.valueOf(cash);
+                String u_kembali    = String.valueOf(change);
+
+                Call<OrderValue> call = apiInterface.updateOrderPay(id_order, u_bayar, u_kembali);
+                call.enqueue(new Callback<OrderValue>() {
+                    @Override
+                    public void onResponse(Call<OrderValue> call, Response<OrderValue> response) {
+                        Integer status = response.body().getStatus();
+                        if (status == 1) {
+                                Toast.makeText(OrderDetailActivity.this, "Paid", Toast.LENGTH_SHORT).show();
+                                finish();
+                        } else {
+                            Toast.makeText(OrderDetailActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<OrderValue> call, Throwable t) {
+                        progressBar.setVisibility(View.GONE);
+                        Log.i("ERROR", t.getMessage());
+                        Toast.makeText(OrderDetailActivity.this, "Error !", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        builder.setView(itemView);
+        builder.show();
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

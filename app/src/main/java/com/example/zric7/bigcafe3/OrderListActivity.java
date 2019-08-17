@@ -69,10 +69,6 @@ public class OrderListActivity extends AppCompatActivity {
                 {
                     loadOrder("ordered");
                     common.bottomNavItemActive="ordered";
-                }else if (item.getItemId()==R.id.ready)
-                {
-                    loadOrder("ready");
-                    common.bottomNavItemActive="ready";
                 }else if (item.getItemId()==R.id.served)
                 {
                     loadOrder("served");

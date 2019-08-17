@@ -121,4 +121,12 @@ public interface ApiInterface {
             @Field("id_order") String id_order,
             @Field("status_order") String status_order
     );
+
+    @FormUrlEncoded
+    @POST("updateorderpay.php")
+    Call<OrderValue> updateOrderPay(
+            @Field("id_order") String id_order,
+            @Field("u_bayar") String u_bayar,
+            @Field("u_kembali") String u_kembali
+    );
 }

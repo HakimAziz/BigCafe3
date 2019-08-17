@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/txt_judul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="18dp"
+        android:text="Payment Received"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_time_stamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_judul"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="2019-02-02 20:30:00"
+        android:textSize="14sp" />
+
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+    <View
+        android:id="@+id/dash_line"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/txt_time_stamp"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/dash_line" />
+
+    <TextView
+        android:id="@+id/txt_lgrand_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dash_line"
+        android:text="Grand Total :"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txt_grand_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/dash_line"
+        android:text="Rp 120.000"
+        android:textSize="18sp" />
+
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+    <TextView
+        android:id="@+id/txt_lcash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_lgrand_total"
+        android:text="Cash   :"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txt_cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/txt_grand_total"
+        android:inputType="number"
+        android:text="Rp 120.000"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/dash_line2"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@id/txt_cash"
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/dash_line" />
+
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+    <TextView
+        android:id="@+id/txt_lchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dash_line2"
+        android:text="Change   :"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/dash_line2"
+        android:text="Rp 120.000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <!--&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_pay"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_below="@id/txt_cash_layout"-->
+    <!--android:layout_marginTop="20dp"-->
+    <!--android:text="PAY" />-->
+
+
+</RelativeLayout>

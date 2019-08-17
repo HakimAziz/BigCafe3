@@ -8,12 +8,12 @@
         android:title="New Order"
         />
 
-    <item
-        android:id="@+id/ready"
-        android:enabled="true"
-        android:title="Ready to Serve"
-        app:showAsAction="ifRoom"
-        />
+    <!--<item-->
+        <!--android:id="@+id/ready"-->
+        <!--android:enabled="true"-->
+        <!--android:title="Ready to Serve"-->
+        <!--app:showAsAction="ifRoom"-->
+        <!--/>-->
 
     <item
         android:id="@+id/served"
