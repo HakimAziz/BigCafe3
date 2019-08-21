@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BigCafe3</string>
+
+    <string-array name="spnr_item_income">
+        <item>Today</item>
+        <item>This Month</item>
+    </string-array>
+
 </resources>

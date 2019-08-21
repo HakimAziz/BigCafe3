@@ -7,7 +7,10 @@ import com.example.zric7.bigcafe3.R;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiClient;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.Locale;
 
 import me.abhinay.input.CurrencyEditText;
@@ -30,6 +33,19 @@ public class common {
     //Format display Uang
     public static Locale localeID = new Locale("in", "ID");
     public static NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+
+    public static String rupiahFormatter(Integer d){
+
+        DecimalFormatSymbols separator = new DecimalFormatSymbols(localeID);
+        separator.setDecimalSeparator(',');
+        separator.setGroupingSeparator('.');
+        DecimalFormat fmt = new DecimalFormat("#,##0.###", separator);
+        String symbol = Currency.getInstance(localeID).getSymbol(localeID);
+        fmt.setGroupingUsed(true);
+        fmt.setPositivePrefix(symbol + " ");
+        fmt.setNegativePrefix("-" + symbol + " ");
+        return fmt.format(d);
+    }
 
 
     //Hold variabel

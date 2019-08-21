@@ -118,8 +118,6 @@ public class OrderDetailActivity extends AppCompatActivity {
         if (common.bottomNavItemActive == "ordered") {
             getMenuInflater().inflate(R.menu.menu_orderdetail_cancel_order, menu);
             getMenuInflater().inflate(R.menu.menu_orderdetail_edit_status, menu);
-        } else if (common.bottomNavItemActive == "served") {
-            getMenuInflater().inflate(R.menu.menu_orderdetail_edit_status, menu);
         } else {
 //            gak nampilin menu
         }

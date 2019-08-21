@@ -129,4 +129,10 @@ public interface ApiInterface {
             @Field("u_bayar") String u_bayar,
             @Field("u_kembali") String u_kembali
     );
+
+    @FormUrlEncoded
+    @POST("getincome.php")
+    Call<OrderValue> getIncome(
+            @Field("scope") String scope
+    );
 }

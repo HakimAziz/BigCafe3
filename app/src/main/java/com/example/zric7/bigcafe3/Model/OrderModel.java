@@ -5,31 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class OrderModel {
 
-    @SerializedName("id_order")
-    @Expose
-    private String id_order;
-    @SerializedName("status_order")
-    @Expose
-    private String status_order;
-    @SerializedName("pemesan")
-    @Expose
-    private String pemesan;
-    @SerializedName("detail")
-    @Expose
-    private String detail;
-    @SerializedName("total_harga")
-    @Expose
-    private String total_harga;
-    @SerializedName("time_stamp")
-    @Expose
-    private String time_stamp;
-    @SerializedName("u_bayar")
-    @Expose
-    private String u_bayar;
-    @SerializedName("u_kembali")
-    @Expose
-    private String u_kembali;
-
     public String getId_order() {
         return id_order;
     }
@@ -93,6 +68,56 @@ public class OrderModel {
     public void setU_kembali(String u_kembali) {
         this.u_kembali = u_kembali;
     }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getIncome() {
+        return income;
+    }
+
+    public void setIncome(String income) {
+        this.income = income;
+    }
+
+    @SerializedName("id_order")
+    @Expose
+    private String id_order;
+    @SerializedName("status_order")
+    @Expose
+    private String status_order;
+    @SerializedName("pemesan")
+    @Expose
+    private String pemesan;
+    @SerializedName("detail")
+    @Expose
+    private String detail;
+    @SerializedName("total_harga")
+    @Expose
+    private String total_harga;
+    @SerializedName("time_stamp")
+    @Expose
+    private String time_stamp;
+    @SerializedName("u_bayar")
+    @Expose
+    private String u_bayar;
+    @SerializedName("u_kembali")
+    @Expose
+    private String u_kembali;
+
+    @SerializedName("count")
+    @Expose
+    private String count;
+
+    @SerializedName("income")
+    @Expose
+    private String income;
+
 
 
 
