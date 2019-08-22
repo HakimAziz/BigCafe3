@@ -59,6 +59,9 @@ dependencies {
 //    Badge notif - buat cart
     implementation 'com.nex3z:notification-badge:1.0.2'
 
+//    Custom Button
+    implementation 'br.com.simplepass:loading-button-android:1.14.0'
+
 //    room database - Buat DAO simpen local data cart
     implementation 'android.arch.persistence.room:runtime:1.1.0'
     implementation 'android.arch.persistence.room:rxjava2:1.1.0'

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.Model.OrderValue;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
+import com.example.zric7.bigcafe3.Utils.SharedPrefManager;
 import com.example.zric7.bigcafe3.Utils.common;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     ApiInterface apiInterface;
     List<MenuModel> menuModelList = new ArrayList<>();
+    SharedPrefManager sharedPrefManager;
 
     String selectedClass;
 
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.spinner_income)
     Spinner spinnerIncome;
 
+    @BindView(R.id.income_judul)
+    TextView incomeJudul;
     @BindView(R.id.txt_income)
     TextView textIncome;
     @BindView(R.id.txt_count)
@@ -54,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle("Order menu");
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
+        sharedPrefManager = new SharedPrefManager(this);
+        incomeJudul.setText(sharedPrefManager.getspUsername().toString());
 
         spinnerIncome.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,6 +90,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getincome(selectedClass);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+            getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                // Red item was selected
+                return true;
+            case R.id.action_logout:
+                sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void getincome(String scope) {

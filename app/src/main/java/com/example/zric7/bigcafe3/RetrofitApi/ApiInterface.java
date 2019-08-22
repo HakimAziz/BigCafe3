@@ -1,5 +1,6 @@
 package com.example.zric7.bigcafe3.RetrofitApi;
 
+import com.example.zric7.bigcafe3.Model.LoginValue;
 import com.example.zric7.bigcafe3.Model.MenuValue;
 import com.example.zric7.bigcafe3.Model.OrderModel;
 import com.example.zric7.bigcafe3.Model.OrderValue;
@@ -134,5 +135,14 @@ public interface ApiInterface {
     @POST("getincome.php")
     Call<OrderValue> getIncome(
             @Field("scope") String scope
+    );
+
+    //login_tb api --------------------------
+
+    @FormUrlEncoded
+    @POST("login.php")
+    Call<LoginValue> login(
+            @Field("username") String username,
+            @Field("password") String password
     );
 }
