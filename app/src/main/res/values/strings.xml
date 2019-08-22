@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BigCafe3</string>
+    <string name="app_name">Big Cafe</string>
 
     <string-array name="spnr_item_income">
         <item>Today</item>

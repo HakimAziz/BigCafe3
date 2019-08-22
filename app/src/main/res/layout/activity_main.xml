@@ -5,20 +5,79 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:scrollbarStyle="insideOverlay"
     tools:context=".MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:weightSum="12">
+
+            <LinearLayout
+                style="@style/parent"
+                android:layout_weight="3"
+                android:background="@drawable/login_shape_bk"
+                android:orientation="vertical">
+                <ImageView
+                    style="@style/parent"
+                    android:background="@drawable/ic_login_bk"
+                    android:contentDescription="login background" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="20dp"
+                app:srcCompat="@drawable/ic_baseline_more_vert_24px"
+                android:background="@null"
+                android:onClick="showPopupMenu" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:paddingVertical="30dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_header_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:text="Ujang"/>
+            <TextView
+                android:id="@+id/txt_header_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:text="Position : Chef"/>
+
+        </LinearLayout>
+
         <android.support.v7.widget.CardView
             android:id="@+id/cv_income"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/header_layout"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp"
             app:cardUseCompatPadding="true"
             app:cardPreventCornerOverlap="false"
-            app:cardCornerRadius="5dp"
-            android:layout_margin="10dp">
+            app:cardCornerRadius="8dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -28,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#F2F2F2"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:textSize="16sp"
                 android:text="Income Overview"/>
 
@@ -73,34 +132,73 @@
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cv_income"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="10dp"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/action_judul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F2F2F2"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:text="Action"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/action_judul"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <Button
+                android:id="@+id/btn_kelola_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginVertical="5dp"
+                android:onClick="on_kelola_menu"
+                android:text="Manage Menu" />
+
+            <Button
+                android:id="@+id/btn_list_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="50dp"
+                android:layout_marginVertical="5dp"
+                android:onClick="on_list_order"
+                android:text="Order List" />
+
+            <Button
+                android:id="@+id/btn_order_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:onClick="on_order_menu"
+                android:text="Take Order ! " />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
         <!--<TextView-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:text="Hello World!" />-->
 
-        <Button
-            android:id="@+id/btn_kelola_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/cv_income"
-            android:onClick="on_kelola_menu"
-            android:text="Manage Menu" />
 
-        <Button
-            android:id="@+id/btn_order_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btn_list_order"
-            android:onClick="on_order_menu"
-            android:text="Take Order ! " />
-
-        <Button
-            android:id="@+id/btn_list_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btn_kelola_menu"
-            android:onClick="on_list_order"
-            android:text="Order List" />
 
 
     </RelativeLayout>

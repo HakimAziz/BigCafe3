@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     ApiInterface apiInterface;
     List<MenuModel> menuModelList = new ArrayList<>();
@@ -42,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.spinner_income)
     Spinner spinnerIncome;
 
-    @BindView(R.id.income_judul)
-    TextView incomeJudul;
+    @BindView(R.id.txt_header_username)
+    TextView textViewHUsername;
+    @BindView(R.id.txt_header_role)
+    TextView textViewHRole;
     @BindView(R.id.txt_income)
     TextView textIncome;
     @BindView(R.id.txt_count)
@@ -61,57 +64,43 @@ public class MainActivity extends AppCompatActivity {
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
         sharedPrefManager = new SharedPrefManager(this);
-        incomeJudul.setText(sharedPrefManager.getspUsername().toString());
+        textViewHUsername.setText(sharedPrefManager.getspUsername().toString());
+        textViewHRole.setText("Position : " + sharedPrefManager.getspRole().toString());
 
         spinnerIncome.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 // Get Selected Class name from the list
                 selectedClass = parentView.getItemAtPosition(position).toString();
-
                 switch (selectedClass) {
                     case "This Month":
-                        selectedClass="month";
+                        selectedClass = "month";
                         break;
                     default:
-                        selectedClass="day";
+                        selectedClass = "day";
                         break;
                 }
                 getincome(selectedClass);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
         });
     }
+//    ===============================
 
     protected void onResume() {
         super.onResume();
         getincome(selectedClass);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                // Red item was selected
-                return true;
-            case R.id.action_logout:
-                sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
-                startActivity(new Intent(MainActivity.this, LoginActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void showPopupMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        popup.setOnMenuItemClickListener(this);
+        inflater.inflate(R.menu.menu_home, popup.getMenu());
+        popup.show();
     }
 
     private void getincome(String scope) {
@@ -125,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 Integer count_value = Integer.parseInt(orderModel.getResult().get(0).getCount());
                 textIncome.setText(common.rupiahFormatter(income_value));
                 textCount.setText(count_value + " Transactions");
-          }
+            }
 
             @Override
             public void onFailure(Call<OrderValue> call, Throwable t) {
@@ -148,4 +137,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, OrderListActivity.class));
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.action_about:
+                // Red item was selected
+                return true;
+            case R.id.action_logout:
+                sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                finish();
+                return true;
+            default:
+                return false;
+        }
+    }
 }
