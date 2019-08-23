@@ -58,9 +58,8 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
         MenuModel result = menuModelList.get(position);
         holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.getNama());
-        holder.TextViewHargaJual.setText(new StringBuilder("Rp ").append(result.getHarga_jual()).toString());
+        holder.TextViewHargaJual.setText(common.rupiahFormatter(Integer.parseInt(result.getHarga_jual())));
         holder.TextViewKet.setText(result.getKet());
-
         if (result.getFoto().isEmpty()) {
             Picasso.get()
                     .load(R.drawable.img_holder)
@@ -70,7 +69,6 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
                     .load(result.getFoto())
                     .into(holder.ImageViewFoto);
         }
-
         holder.TextViewFoto.setText(result.getFoto());
         holder.TextViewHargaModal.setText(result.getHarga_modal());
         holder.TextViewHargaJual_polos.setText(result.getHarga_jual());

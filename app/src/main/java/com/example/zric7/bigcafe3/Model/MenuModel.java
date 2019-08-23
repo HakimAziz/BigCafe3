@@ -8,6 +8,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class MenuModel {
+
+
     @SerializedName("id_produk")
     @Expose
     private String id_produk;
@@ -85,6 +87,7 @@ public class MenuModel {
     public void setKet(String ket) {
         this.ket = ket;
     }
+
 
 }
 

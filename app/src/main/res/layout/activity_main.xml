@@ -25,7 +25,9 @@
                 android:orientation="vertical">
                 <ImageView
                     style="@style/parent"
-                    android:background="@drawable/ic_login_bk"
+                    app:srcCompat="@drawable/ic_login_bk"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
                     android:contentDescription="login background" />
             </LinearLayout>
         </LinearLayout>

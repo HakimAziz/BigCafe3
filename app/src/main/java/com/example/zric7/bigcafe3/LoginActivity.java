@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         sharedPrefManager = new SharedPrefManager(this);
         // Code berikut berfungsi untuk mengecek session, Jika session true ( sudah login )
