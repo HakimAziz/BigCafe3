@@ -112,8 +112,9 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
+        updateCartCount();
 //        getMenu();
 
     }
@@ -171,7 +172,7 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
         return true;
     }
 
-    private void updateCartCount() {
+    public void updateCartCount() {
         if(badge == null) return;
         runOnUiThread(new Runnable() {
             @Override

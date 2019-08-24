@@ -15,14 +15,14 @@
 
             <RadioButton
                 android:id="@+id/rdi_meja_1"
-                android:text="Meja 1"
+                android:text="Table 1"
                 android:checked="true"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <RadioButton
                 android:id="@+id/rdi_meja_2"
-                android:text="Meja 2"
+                android:text="Table 2"
                 android:checked="false"
                 android:padding="10dp"
                 android:layout_width="match_parent"
@@ -30,14 +30,14 @@
 
             <RadioButton
                 android:id="@+id/rdi_meja_3"
-                android:text="Meja 3"
+                android:text="Table 3"
                 android:checked="false"
                 android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <RadioButton
                 android:id="@+id/rdi_meja_4"
-                android:text="Meja 4"
+                android:text="Table 4"
                 android:checked="false"
                 android:padding="10dp"
                 android:layout_width="match_parent"

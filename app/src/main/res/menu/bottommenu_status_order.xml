@@ -5,37 +5,35 @@
     <item
         android:id="@+id/ordered"
         android:enabled="true"
-        android:title="New Order"
-        />
+        android:icon="@drawable/ic_orderlist"
+        android:color="@color/primary"
+        android:title="Recent Order"
 
-    <!--<item-->
-        <!--android:id="@+id/ready"-->
-        <!--android:enabled="true"-->
-        <!--android:title="Ready to Serve"-->
-        <!--app:showAsAction="ifRoom"-->
-        <!--/>-->
+        />
 
     <item
         android:id="@+id/served"
         android:enabled="true"
+        android:icon="@drawable/ic_foods_fill"
+        android:color="@color/yellow"
         android:title="Served"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/paid"
         android:enabled="true"
+        android:icon="@drawable/ic_round_done_24px"
+        android:color="@color/green"
         android:title="Paid"
-        app:showAsAction="ifRoom"
-        />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/canceled"
         android:enabled="true"
+        android:icon="@drawable/ic_round_cancel"
+        android:color="@color/red"
         android:title="Canceled"
-        app:showAsAction="ifRoom"
-        />
-
+        app:showAsAction="ifRoom" />
 
 
 </menu>

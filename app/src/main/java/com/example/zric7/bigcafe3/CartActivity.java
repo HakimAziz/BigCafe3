@@ -276,7 +276,7 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
             //Delete item from Room Database
             common.cartRepository.deleteCartItem(deletedItem);
 
-            Snackbar snackbar = Snackbar.make(rootLayout, new StringBuilder(name).append(" removed from favorites list").toString(),
+            Snackbar snackbar = Snackbar.make(rootLayout, new StringBuilder(name).append(" removed from cart list").toString(),
                     Snackbar.LENGTH_LONG);
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override

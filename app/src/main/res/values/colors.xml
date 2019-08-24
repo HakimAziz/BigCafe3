@@ -27,6 +27,11 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
 
+    <color name="yellow">#FFA000</color>
+    <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
+
+
     <!--colros for card-->
     <color name="whiteCardColor">#fff</color>
 </resources>

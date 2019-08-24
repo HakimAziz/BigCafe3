@@ -1,7 +1,10 @@
 package com.example.zric7.bigcafe3;
 
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -67,18 +70,26 @@ public class OrderListActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 if (item.getItemId()==R.id.ordered)
                 {
+                    getSupportActionBar().setTitle("Recent Order");
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderListActivity.this, R.color.primary)));
                     loadOrder("ordered");
                     common.bottomNavItemActive="ordered";
                 }else if (item.getItemId()==R.id.served)
                 {
+                    getSupportActionBar().setTitle("Served Order");
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderListActivity.this, R.color.yellow)));
                     loadOrder("served");
                     common.bottomNavItemActive="served";
                 }else if (item.getItemId()==R.id.paid)
                 {
+                    getSupportActionBar().setTitle("Paid Order");
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderListActivity.this, R.color.green)));
                     loadOrder("paid");
                     common.bottomNavItemActive="paid";
                 }else if (item.getItemId()==R.id.canceled)
                 {
+                    getSupportActionBar().setTitle("Cancel Order");
+                    getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderListActivity.this, R.color.red)));
                     loadOrder("canceled");
                     common.bottomNavItemActive="canceled";
                 }

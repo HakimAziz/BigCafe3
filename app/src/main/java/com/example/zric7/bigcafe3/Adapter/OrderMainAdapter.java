@@ -40,7 +40,6 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
     Context context;
     List<MenuModel> menuModelList;
 
-
     public OrderMainAdapter(Context context, List<MenuModel> vmenuModelList) {
         this.context = context;
         this.menuModelList = vmenuModelList;
@@ -59,7 +58,13 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
         holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.getNama());
         holder.TextViewHargaJual.setText(common.rupiahFormatter(Integer.parseInt(result.getHarga_jual())));
-        holder.TextViewKet.setText(result.getKet());
+
+        if (result.getKet().equals("Not Available")){
+            holder.TextViewKet.setText(result.getKet());
+        } else{
+            holder.TextViewKet.setText("");
+        }
+
         if (result.getFoto().isEmpty()) {
             Picasso.get()
                     .load(R.drawable.img_holder)
@@ -115,63 +120,68 @@ public class OrderMainAdapter extends RecyclerView.Adapter<OrderMainAdapter.View
             final String ket            = TextViewKet.getText().toString();
             final String kategori       = TextViewKategori.getText().toString();
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            View itemView = LayoutInflater.from(context)
-                    .inflate(R.layout.layout_add_to_cart,null);
+            if(ket.equals("Not Available")){
+                Toast.makeText(context, ket, Toast.LENGTH_SHORT).show();
+            }else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                View itemView = LayoutInflater.from(context)
+                        .inflate(R.layout.layout_add_to_cart,null);
 
-            ImageView img_product_dialog    = (ImageView)itemView.findViewById(R.id.img_cart_product);
-            final TextView txt_product_name = (TextView)itemView.findViewById(R.id.txt_cart_product_name);
-            TextView txt_product_harga      = (TextView)itemView.findViewById(R.id.txt_cart_product_harga_jual);
-            final ElegantNumberButton txt_count = (ElegantNumberButton)itemView.findViewById(R.id.txt_count);
+                ImageView img_product_dialog    = (ImageView)itemView.findViewById(R.id.img_cart_product);
+                final TextView txt_product_name = (TextView)itemView.findViewById(R.id.txt_cart_product_name);
+                TextView txt_product_harga      = (TextView)itemView.findViewById(R.id.txt_cart_product_harga_jual);
+                final ElegantNumberButton txt_count = (ElegantNumberButton)itemView.findViewById(R.id.txt_count);
 
-            //Set data
-            if (foto.isEmpty()) {
-                Picasso.get()
-                        .load(R.drawable.img_holder)
-                        .into(img_product_dialog);
-            } else{
-                Picasso.get()
-                        .load(foto)
-                        .into(img_product_dialog);
-            }
-            txt_product_name.setText(nama);
-            txt_product_harga.setText(harga_jual);
-
-
-            builder.setNegativeButton("ADD TO CART", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                    dialogInterface.dismiss();
-
-                    final String numberQty = txt_count.getNumber();
-                    final Integer total_harga = (Integer.parseInt(harga_jual) * Integer.parseInt(numberQty));
-
-                    //Add to SQLite
-                    try {
-                        Cart cartItem = new Cart();
-                        cartItem.id     = Integer.parseInt(id_produk);
-                        cartItem.foto   = foto;
-                        cartItem.name   = nama;
-                        cartItem.qty    = Integer.parseInt(numberQty);
-                        cartItem.price_item     = Integer.parseInt(harga_jual);
-                        cartItem.price_total    = total_harga;
-
-                        //Add to DB
-                        common.cartRepository.insertToCart(cartItem);
-
-                        Log.d("BigCafe_DEBUG", new Gson().toJson(cartItem));
-
-                        Toast.makeText(context, "Save item to cart success", Toast.LENGTH_LONG).show();
-                    }catch (Exception ex) {
-                        Toast.makeText(context,"Menu sudah ada di Cart",Toast.LENGTH_LONG).show();
-//                        Toast.makeText(context,ex.getMessage(),Toast.LENGTH_LONG).show();
-                    }
+                //Set data
+                if (foto.isEmpty()) {
+                    Picasso.get()
+                            .load(R.drawable.img_holder)
+                            .into(img_product_dialog);
+                } else{
+                    Picasso.get()
+                            .load(foto)
+                            .into(img_product_dialog);
                 }
-            });
+                txt_product_name.setText(nama);
+                txt_product_harga.setText(common.rupiahFormatter(Integer.parseInt(harga_jual)));
 
-            builder.setView(itemView);
-            builder.show();
+
+                builder.setNegativeButton("ADD TO CART", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+
+                        final String numberQty = txt_count.getNumber();
+                        final Integer total_harga = (Integer.parseInt(harga_jual) * Integer.parseInt(numberQty));
+
+                        //Add to SQLite
+                        try {
+                            Cart cartItem = new Cart();
+                            cartItem.id     = Integer.parseInt(id_produk);
+                            cartItem.foto   = foto;
+                            cartItem.name   = nama;
+                            cartItem.qty    = Integer.parseInt(numberQty);
+                            cartItem.price_item     = Integer.parseInt(harga_jual);
+                            cartItem.price_total    = total_harga;
+
+                            //Add to DB
+                            common.cartRepository.insertToCart(cartItem);
+
+                            Log.d("BigCafe_DEBUG", new Gson().toJson(cartItem));
+
+                            Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show();
+
+                        }catch (Exception ex) {
+                            Toast.makeText(context,"This item is already in the cart",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                builder.setView(itemView);
+                builder.show();
+            }
+
         }
     }
 

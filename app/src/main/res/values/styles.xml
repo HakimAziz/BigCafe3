@@ -21,9 +21,6 @@
     </style>
 
 
-
-
-
     <!--designs for login and register-->
     <style name="parent">
         <item name="android:layout_width">match_parent</item>
@@ -73,6 +70,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
     </style>
+
 
 
 </resources>

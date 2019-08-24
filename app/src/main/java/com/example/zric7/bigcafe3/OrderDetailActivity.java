@@ -2,7 +2,9 @@ package com.example.zric7.bigcafe3;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,25 +86,39 @@ public class OrderDetailActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(orderDetailAdapter);
 
-        TextViewIdOrder.setText(common.orderClicked.getId_order());
+        TextViewIdOrder.setText("ID-"+common.orderClicked.getId_order());
         TextViewPemesan.setText(common.orderClicked.getPemesan());
         TextViewTimeStamp.setText(common.orderClicked.getTime_stamp());
         TextViewTotalHarga.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getTotal_harga())));
         TextViewUBayar.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getU_bayar())));
         TextViewUKembali.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getU_kembali())));
 
-        if (common.bottomNavItemActive == "served") {
-            ButtonViewCheckout.setVisibility(View.VISIBLE);
-            RLuBayar.setVisibility(View.GONE);
-            RLuKembalian.setVisibility(View.GONE);
-        } else if (common.bottomNavItemActive == "paid"){
-            ButtonViewCheckout.setVisibility(View.GONE);
-            RLuBayar.setVisibility(View.VISIBLE);
-            RLuKembalian.setVisibility(View.VISIBLE);
-        }else {
-            ButtonViewCheckout.setVisibility(View.GONE);
-            RLuBayar.setVisibility(View.GONE);
-            RLuKembalian.setVisibility(View.GONE);
+        String id_btmNavItemActive = common.bottomNavItemActive;
+        switch (id_btmNavItemActive) {
+            case "served":
+                ButtonViewCheckout.setVisibility(View.VISIBLE);
+                RLuBayar.setVisibility(View.GONE);
+                RLuKembalian.setVisibility(View.GONE);
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderDetailActivity.this, R.color.yellow)));
+                break;
+            case "paid":
+                ButtonViewCheckout.setVisibility(View.GONE);
+                RLuBayar.setVisibility(View.VISIBLE);
+                RLuKembalian.setVisibility(View.VISIBLE);
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderDetailActivity.this, R.color.green)));
+                break;
+            case "canceled":
+                ButtonViewCheckout.setVisibility(View.GONE);
+                RLuBayar.setVisibility(View.GONE);
+                RLuKembalian.setVisibility(View.GONE);
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderDetailActivity.this, R.color.red)));
+                break;
+            default:
+                ButtonViewCheckout.setVisibility(View.GONE);
+                RLuBayar.setVisibility(View.GONE);
+                RLuKembalian.setVisibility(View.GONE);
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderDetailActivity.this, R.color.primary)));
+                break;
         }
     }
 
@@ -139,7 +155,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             //=========event btn centang di klik
             case R.id.action_edit_statusorder:
 //                if (common.bottomNavItemActive == "ordered") {
-                    dialogConfirmMenu(common.orderClicked.getId_order(), "served");
+                dialogConfirmMenu(common.orderClicked.getId_order(), "served");
 //                } else {
 //                    dialogConfirmMenu(common.orderClicked.getId_order(), "paid");
 //                }
@@ -152,7 +168,7 @@ public class OrderDetailActivity extends AppCompatActivity {
         if (status_order == "canceled") {
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Cancel the order ?");
+            alertDialogBuilder.setTitle("Cancel order ?");
             alertDialogBuilder
                     .setMessage("")
                     .setCancelable(false)
@@ -182,7 +198,7 @@ public class OrderDetailActivity extends AppCompatActivity {
 
                         }
                     })
-                    .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
@@ -274,9 +290,9 @@ public class OrderDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                String id_order     = common.orderClicked.getId_order();
-                String u_bayar      = String.valueOf(cash);
-                String u_kembali    = String.valueOf(change);
+                String id_order = common.orderClicked.getId_order();
+                String u_bayar = String.valueOf(cash);
+                String u_kembali = String.valueOf(change);
 
                 Call<OrderValue> call = apiInterface.updateOrderPay(id_order, u_bayar, u_kembali);
                 call.enqueue(new Callback<OrderValue>() {
@@ -284,12 +300,13 @@ public class OrderDetailActivity extends AppCompatActivity {
                     public void onResponse(Call<OrderValue> call, Response<OrderValue> response) {
                         Integer status = response.body().getStatus();
                         if (status == 1) {
-                                Toast.makeText(OrderDetailActivity.this, "Paid", Toast.LENGTH_SHORT).show();
-                                finish();
+                            Toast.makeText(OrderDetailActivity.this, "Paid", Toast.LENGTH_SHORT).show();
+                            finish();
                         } else {
                             Toast.makeText(OrderDetailActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onFailure(Call<OrderValue> call, Throwable t) {
                         progressBar.setVisibility(View.GONE);

@@ -5,13 +5,15 @@
     <item
         android:id="@+id/makanan"
         android:enabled="true"
-        android:title="Makanan"
+        android:title="Foods"
+        android:icon="@drawable/ic_foods_fill"
         />
 
     <item
         android:id="@+id/minuman"
         android:enabled="true"
-        android:title="Minuman"
+        android:title="Drinks"
+        android:icon="@drawable/ic_drinks_fill"
         app:showAsAction="ifRoom"
         />
 

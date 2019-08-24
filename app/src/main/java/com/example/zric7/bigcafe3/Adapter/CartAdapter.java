@@ -49,7 +49,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Cart result = cartList.get(position);
 //        holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.name);
-        holder.TextViewHargaJual.setText(new StringBuilder("@Rp ").append(result.price_item).toString());
+        holder.TextViewHargaJual.setText("@"+common.rupiahFormatter(result.price_item));
         holder.ENBQty.setNumber(String.valueOf(result.qty));
 
         if (result.foto.isEmpty()) {
@@ -80,7 +80,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     //Delete item from Room Database
                     common.cartRepository.deleteCartItem(deletedItem);
 
-                    Snackbar snackbar = Snackbar.make(view, new StringBuilder(name).append(" removed from favorites list").toString(),
+                    Snackbar snackbar = Snackbar.make(view, new StringBuilder(name).append(" removed from cart list").toString(),
                             Snackbar.LENGTH_LONG);
                     snackbar.setAction("UNDO", new View.OnClickListener() {
                         @Override
@@ -123,7 +123,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         public @BindView(R.id.view_background)
         RelativeLayout view_background;
         public @BindView(R.id.view_foreground)
-        LinearLayout view_foreground;
+        RelativeLayout view_foreground;
 
 
         public CartViewHolder(View itemView) {
