@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -61,7 +63,7 @@ public class beMenuEditActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Edit Data");
+        getSupportActionBar().setTitle("Edit Menu");
 
         Intent intent = getIntent();
         String id_produk    = intent.getStringExtra("id_produk");
@@ -150,11 +152,11 @@ public class beMenuEditActivity extends AppCompatActivity {
                 break;
             case R.id.action_delete:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("Peringatan");
+                alertDialogBuilder.setTitle("");
                 alertDialogBuilder
-                        .setMessage("Apakah Anda yakin ingin mengapus data ini?")
+                        .setMessage("Delete menu item ?")
                         .setCancelable(false)
-                        .setPositiveButton("Hapus",new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Delete",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
 
                                 String id_produk = editTextIdProduk.getText().toString();
@@ -165,22 +167,22 @@ public class beMenuEditActivity extends AppCompatActivity {
                                     public void onResponse(Call<MenuValue> call, Response<MenuValue> response) {
                                         Integer status = response.body().getStatus();
                                         if (status==1) {
-                                            Toast.makeText(beMenuEditActivity.this, "bisa hapus", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(beMenuEditActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
                                             finish();
                                         } else {
-                                            Toast.makeText(beMenuEditActivity.this, "gagal hapus", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(beMenuEditActivity.this, "Failed to delete", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                     @Override
                                     public void onFailure(Call<MenuValue> call, Throwable t) {
-                                        t.printStackTrace();
                                         progress.dismiss();
-                                        Toast.makeText(beMenuEditActivity.this, "Jaringan Error!", Toast.LENGTH_SHORT).show();
+                                        Log.i("ERROR_LoadMenu", t.getMessage());
+                                        Toast.makeText(beMenuEditActivity.this, "Load Menu Failed ", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
                         })
-                        .setNegativeButton("Batal",new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 dialog.cancel();
                             }

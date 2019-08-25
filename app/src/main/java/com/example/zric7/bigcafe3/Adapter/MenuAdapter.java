@@ -51,7 +51,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.getNama());
         holder.TextViewHargaJual.setText(new StringBuilder("Rp ").append(result.getHarga_jual()).toString());
-        holder.TextViewKet.setText(result.getKet());
+
+        if (result.getKet().equals("Not Available")){
+            holder.TextViewKet.setText(result.getKet());
+        } else{
+            holder.TextViewKet.setText("");
+        }
 
         if (result.getFoto().isEmpty()) {
             Picasso.get()

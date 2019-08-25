@@ -55,7 +55,7 @@ public class OrderListActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Order List");
+        getSupportActionBar().setTitle("Recent Order");
 
         orderListAdapter = new OrderListAdapter(this, orderModelList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -88,7 +88,7 @@ public class OrderListActivity extends AppCompatActivity {
                     common.bottomNavItemActive="paid";
                 }else if (item.getItemId()==R.id.canceled)
                 {
-                    getSupportActionBar().setTitle("Cancel Order");
+                    getSupportActionBar().setTitle("Canceled Order");
                     getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderListActivity.this, R.color.red)));
                     loadOrder("canceled");
                     common.bottomNavItemActive="canceled";

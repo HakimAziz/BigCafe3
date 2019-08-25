@@ -2,12 +2,14 @@ package com.example.zric7.bigcafe3;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -18,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.zric7.bigcafe3.Adapter.MenuAdapter;
+import com.example.zric7.bigcafe3.Adapter.OrderMainAdapter;
 import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.Model.MenuValue;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
@@ -39,6 +42,8 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
     List<MenuModel> menuModelList = new ArrayList<>();
     MenuAdapter menuAdapter;
 
+    BottomNavigationView bottomNavigationView;
+
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
 
@@ -56,13 +61,30 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Daftar menu");
+        getSupportActionBar().setTitle("Manage Menu");
 
         menuAdapter = new MenuAdapter(this, menuModelList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(menuAdapter);
+
+        bottomNavigationView=findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (item.getItemId()==R.id.makanan)
+                {
+                    getMenuByKategori("makanan");
+                }else if (item.getItemId()==R.id.minuman)
+                {
+                    getMenuByKategori("minuman");
+                }
+                return true;
+            }
+        });
+        getMenuByKategori("makanan");
 
 //        Inisiasi Tombol FAB
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -77,7 +99,7 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
         });
 
 //        Panggil method untuk nampilin daftar menu
-        getMenu();
+//        getMenu();
     }
     //   ==================================
 
@@ -94,7 +116,34 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
     @Override
     protected void onResume() {
         super.onResume();
-        getMenu();
+//        getMenu();
+    }
+
+    //    ==============================
+//    Method Menampilkan daftar data menu
+//    ==============================
+    private void getMenuByKategori(String kategori) {
+        Call<MenuValue> jsonData = apiInterface.getMenuByKategori(kategori);  /*Panggil method request ke webservice*/
+        jsonData.enqueue(new Callback<MenuValue>() {
+            @Override
+            public void onResponse(@NonNull Call<MenuValue> call,@NonNull Response<MenuValue> response) {
+                int status = response.body().getStatus();
+                progressBar.setVisibility(View.GONE);
+                if (status==1) {
+                    menuModelList = response.body().getResult();
+                    menuAdapter = new MenuAdapter(beMenuActivity.this, menuModelList);
+                    recyclerView.setAdapter(menuAdapter);
+                }else{
+                    Toast.makeText(beMenuActivity.this, "eror", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<MenuValue> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Log.i("ERROR_LoadMenu", t.getMessage());
+                Toast.makeText(beMenuActivity.this, "Load Menu Failed ", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 //    ==============================
@@ -134,7 +183,7 @@ public class beMenuActivity extends AppCompatActivity implements SearchView.OnQu
         getMenuInflater().inflate(R.menu.menu_search_be, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Cari Menu");
+        searchView.setQueryHint("Search Menu");
         searchView.setIconified(true);
         searchView.setOnQueryTextListener(this);
         return true;

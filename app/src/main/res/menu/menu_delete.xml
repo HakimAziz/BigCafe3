@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_delete"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_round_delete_24px"
         app:showAsAction="always"
         android:title="Delete"/>
 

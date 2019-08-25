@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     card_view:cardUseCompatPadding="true"
     card_view:cardPreventCornerOverlap="false"
     card_view:cardCornerRadius="8dp">

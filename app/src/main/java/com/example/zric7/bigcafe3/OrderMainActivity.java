@@ -89,7 +89,6 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
                 return true;
             }
         });
-
         getMenuByKategori("makanan");
 
         //Init Database
@@ -154,7 +153,7 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
         getMenuInflater().inflate(R.menu.menu_search, menu);
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint("Cari Menu");
+        searchView.setQueryHint("Search Menu");
         searchView.setIconified(true);
         searchView.setOnQueryTextListener(this);
 
