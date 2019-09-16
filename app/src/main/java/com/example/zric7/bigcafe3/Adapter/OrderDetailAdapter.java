@@ -55,9 +55,11 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 //        final Cart result = cartList.get(position);
         holder.TextViewId.setText(new StringBuilder("#ID-").append(cartList.get(position).getId()).toString());
         holder.TextViewNama.setText(cartList.get(position).getName());
-        holder.TextViewPriceItem.setText(new StringBuilder("@").append(common.formatRupiah.format((double)cartList.get(position).getPrice_item())).append("  x"));
-        holder.TextViewPriceTotal.setText(common.formatRupiah.format((double)cartList.get(position).getPrice_total()));
+//        holder.TextViewPriceItem.setText(new StringBuilder("@").append(common.formatRupiah.format((double)cartList.get(position).getPrice_item())).append("  x"));
+//        holder.TextViewPriceTotal.setText(common.formatRupiah.format((double)cartList.get(position).getPrice_total()));
         holder.TextViewQty.setText(String.valueOf(cartList.get(position).getQty()));
+        holder.TextViewPriceTotal.setText(common.rupiahFormatter(Integer.valueOf(cartList.get(position).getPrice_total())));
+        holder.TextViewPriceItem.setText(new StringBuilder("@").append(common.rupiahFormatter(Integer.valueOf(cartList.get(position).getPrice_item()))).append("  x"));
 
 
         if (cartList.get(position).getFoto().isEmpty()) {

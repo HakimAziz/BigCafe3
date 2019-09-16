@@ -16,11 +16,15 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp" />
+        android:layout_above="@id/bottom_nav"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:padding="5dp"
+        android:clipToPadding="false"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="3dp"
         android:layout_above="@id/bottom_nav"
         android:background="@drawable/shadow" />
 
@@ -34,7 +38,6 @@
         app:itemIconTint="@color/btmmenu_colors"
         app:itemTextColor="@color/btmmenu_colors"
         app:menu="@menu/bottommenu_kategori_menu">
-
     </android.support.design.widget.BottomNavigationView>
 
     <android.support.design.widget.FloatingActionButton

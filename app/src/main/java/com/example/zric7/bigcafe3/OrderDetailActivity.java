@@ -24,6 +24,7 @@ import com.example.zric7.bigcafe3.Adapter.OrderDetailAdapter;
 import com.example.zric7.bigcafe3.Model.OrderModel;
 import com.example.zric7.bigcafe3.Model.OrderValue;
 import com.example.zric7.bigcafe3.RetrofitApi.ApiInterface;
+import com.example.zric7.bigcafe3.Utils.SharedPrefManager;
 import com.example.zric7.bigcafe3.Utils.common;
 
 import java.util.ArrayList;
@@ -42,6 +43,9 @@ public class OrderDetailActivity extends AppCompatActivity {
     ApiInterface apiInterface;
     List<OrderModel> orderModelList = new ArrayList<>();
     OrderDetailAdapter orderDetailAdapter;
+
+    SharedPrefManager sharedPrefManager;
+    String role_user ;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -76,6 +80,9 @@ public class OrderDetailActivity extends AppCompatActivity {
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
 
+        sharedPrefManager = new SharedPrefManager(this);
+        role_user = sharedPrefManager.getspRole().trim();
+
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Order Detail");
@@ -89,14 +96,19 @@ public class OrderDetailActivity extends AppCompatActivity {
         TextViewIdOrder.setText("ID-"+common.orderClicked.getId_order());
         TextViewPemesan.setText(common.orderClicked.getPemesan());
         TextViewTimeStamp.setText(common.orderClicked.getTime_stamp());
-        TextViewTotalHarga.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getTotal_harga())));
-        TextViewUBayar.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getU_bayar())));
-        TextViewUKembali.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getU_kembali())));
+
+        TextViewTotalHarga.setText(common.rupiahFormatter(Integer.valueOf(common.orderClicked.getTotal_harga())));
+        TextViewUBayar.setText(common.rupiahFormatter(Integer.valueOf(common.orderClicked.getU_bayar())));
+        TextViewUKembali.setText(common.rupiahFormatter(Integer.valueOf(common.orderClicked.getU_kembali())));
 
         String id_btmNavItemActive = common.bottomNavItemActive;
         switch (id_btmNavItemActive) {
             case "served":
-                ButtonViewCheckout.setVisibility(View.VISIBLE);
+                if((role_user.equals("waiter"))||(role_user.equals("admin"))){
+                    ButtonViewCheckout.setVisibility(View.VISIBLE);
+                }else{
+                    ButtonViewCheckout.setVisibility(View.GONE);
+                }
                 RLuBayar.setVisibility(View.GONE);
                 RLuKembalian.setVisibility(View.GONE);
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(OrderDetailActivity.this, R.color.yellow)));
@@ -126,12 +138,11 @@ public class OrderDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        getMenu();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (common.bottomNavItemActive == "ordered") {
+        if ((common.bottomNavItemActive.equals("ordered")) && ((role_user.equals("chef")) || (role_user.equals("admin")))) {
             getMenuInflater().inflate(R.menu.menu_orderdetail_cancel_order, menu);
             getMenuInflater().inflate(R.menu.menu_orderdetail_edit_status, menu);
         } else {
@@ -251,7 +262,9 @@ public class OrderDetailActivity extends AppCompatActivity {
         edt_Cash.setSeparator(".");
 
         //Set data
-        textViewGrandTotal.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getTotal_harga())));
+//        textViewGrandTotal.setText(common.formatRupiah.format(Integer.parseInt(common.orderClicked.getTotal_harga())));
+        textViewGrandTotal.setText(common.rupiahFormatter(Integer.valueOf(common.orderClicked.getTotal_harga())));
+
 
         builder.setView(itemView);
 
@@ -282,9 +295,9 @@ public class OrderDetailActivity extends AppCompatActivity {
         final TextView textViewChange = itemView.findViewById(R.id.txt_change);
 
         //Set data
-        textViewGrandTotal.setText(common.formatRupiah.format(total));
-        textViewCash.setText(common.formatRupiah.format(cash));
-        textViewChange.setText(common.formatRupiah.format(change));
+        textViewGrandTotal.setText(common.rupiahFormatter(total));
+        textViewCash.setText(common.rupiahFormatter(cash));
+        textViewChange.setText(common.rupiahFormatter(change));
 
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
             @Override

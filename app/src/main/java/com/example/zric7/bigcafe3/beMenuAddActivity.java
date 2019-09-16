@@ -88,9 +88,9 @@ public class beMenuAddActivity extends AppCompatActivity {
                 Integer status = response.body().getStatus();
                 progress.dismiss();
                 if (status==1) {
-                    Toast.makeText(beMenuAddActivity.this, "bisa ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(beMenuAddActivity.this, "Menu item has been added", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(beMenuAddActivity.this, "gk bisa ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(beMenuAddActivity.this, "Menu item failed to add", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,6 +54,13 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @BindView(R.id.txt_count)
     TextView textCount;
 
+    @BindView(R.id.btn_kelola_menu)
+    Button buttonKelolaMenu;
+    @BindView(R.id.btn_list_order)
+    Button buttonListOrder;
+    @BindView(R.id.btn_order_menu)
+    Button buttonTakeOrder;
+
     //   =======> Saat halaman jalan... (onCreate)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         apiInterface = common.getAPI(); /*Koneksi ke interface API*/
         sharedPrefManager = new SharedPrefManager(this);
+
         textViewHUsername.setText(sharedPrefManager.getspUsername().toString());
         textViewHRole.setText("Position : " + sharedPrefManager.getspRole().toString());
 
@@ -88,6 +97,19 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 // your code here
             }
         });
+
+        String role_user = sharedPrefManager.getspRole();
+        switch (role_user) {
+            case "waiter":
+                buttonKelolaMenu.setVisibility(View.GONE);
+                break;
+            case "chef":
+                buttonKelolaMenu.setVisibility(View.GONE);
+                buttonTakeOrder.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
     }
 //    ===============================
 
@@ -141,9 +163,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.action_about:
-                // Red item was selected
-                return true;
+//            case R.id.action_about:
+//                // Red item was selected
+//                return true;
             case R.id.action_logout:
                 sharedPrefManager.saveSPBoolean(SharedPrefManager.SP_SUDAH_LOGIN, false);
                 startActivity(new Intent(MainActivity.this, LoginActivity.class)

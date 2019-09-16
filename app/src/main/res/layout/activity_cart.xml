@@ -5,17 +5,18 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
     tools:context=".CartActivity">
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_cart"
-        android:layout_above="@id/btn_place_order"
-        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_place_order"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:padding="5dp"
+        android:clipToPadding="false"/>
 
     <Button
         android:id="@+id/btn_place_order"

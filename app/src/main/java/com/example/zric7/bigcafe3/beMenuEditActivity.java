@@ -128,10 +128,10 @@ public class beMenuEditActivity extends AppCompatActivity {
                 Integer status = response.body().getStatus();
                 progress.dismiss();
                 if (status==1) {
-                    Toast.makeText(beMenuEditActivity.this, "bisa update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(beMenuEditActivity.this, "Success to edit", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(beMenuEditActivity.this, "gagal update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(beMenuEditActivity.this, "Failed to edit", Toast.LENGTH_SHORT).show();
                 }
             }
 

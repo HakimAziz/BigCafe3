@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.R;
+import com.example.zric7.bigcafe3.Utils.common;
 import com.example.zric7.bigcafe3.beMenuEditActivity;
 import com.squareup.picasso.Picasso;
 
@@ -50,7 +51,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>{
         MenuModel result = menuModelList.get(position);
         holder.TextViewIdProduk.setText(result.getId_produk());
         holder.TextViewNama.setText(result.getNama());
-        holder.TextViewHargaJual.setText(new StringBuilder("Rp ").append(result.getHarga_jual()).toString());
+        holder.TextViewHargaJual.setText(common.rupiahFormatter(Integer.valueOf(result.getHarga_jual())));
 
         if (result.getKet().equals("Not Available")){
             holder.TextViewKet.setText(result.getKet());
