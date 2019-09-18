@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,44 +9,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/edt_id_produk"
-            android:hint="id_produk gk keliatan"
-            android:inputType="textCapSentences"
             android:layout_width="0dp"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp"
+            android:hint="id_produk gk keliatan"
+            android:inputType="textCapSentences" />
 
         <ImageView
             android:id="@+id/img_foto_edit"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@drawable/img_holder"/>
+            android:src="@drawable/img_holder" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp">
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp">
+
             <EditText
                 android:id="@+id/edt_nama"
-                android:hint="Nama Menu"
-                android:textSize="18sp"
-                android:inputType="textCapSentences"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Name"
+                android:inputType="textCapSentences"
+                android:textSize="18sp"
                 tools:ignore="Autofill" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kategori :"
-            />
+            android:text="Category :" />
+
         <RadioGroup
             android:id="@+id/radio_g_kategori"
             android:layout_width="match_parent"
@@ -60,63 +59,66 @@
                 android:id="@+id/radio_makanan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Makanan"
                 android:layout_weight="1"
-                android:checked="true" />
+                android:checked="true"
+                android:text="Food" />
 
             <RadioButton
                 android:id="@+id/radio_minuman"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Minuman" />
+                android:text="Drink" />
         </RadioGroup>
 
 
         <EditText
             android:id="@+id/edt_foto"
-            android:hint="foto"
-            android:textSize="18sp"
-            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="foto"
+            android:inputType="textCapSentences"
+            android:textSize="18sp"
             tools:ignore="Autofill" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
             android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp">
+            android:visibility="gone">
+
             <EditText
                 android:id="@+id/edt_harga_modal"
-                android:hint="Harga Modal"
-                android:textSize="18sp"
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Harga Modal"
+                android:inputType="number"
+                android:textSize="18sp"
                 tools:ignore="Autofill" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp">
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp">
+
             <EditText
                 android:id="@+id/edt_harga_jual"
-                android:hint="Harga Jual"
-                android:textSize="18sp"
-                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Price"
+                android:inputType="number"
+                android:textSize="18sp"
                 tools:ignore="Autofill" />
         </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Status :"
-            />
+            android:text="Status :" />
+
         <RadioGroup
             android:id="@+id/radio_g_ket"
             android:layout_width="match_parent"
@@ -128,25 +130,24 @@
                 android:id="@+id/radio_tersedia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Tersedia"
                 android:layout_weight="1"
-                android:checked="true" />
+                android:checked="true"
+                android:text="Available" />
 
             <RadioButton
                 android:id="@+id/radio_tidak_tersedia"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Tidak Tersedia" />
+                android:text="Not Available" />
         </RadioGroup>
 
         <Button
             android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit"/>
-
-
+            android:layout_marginVertical="10dp"
+            android:text="Submit" />
 
     </LinearLayout>
 
