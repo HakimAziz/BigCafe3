@@ -52,20 +52,11 @@ public class CartActivity extends AppCompatActivity implements RecyclerItemTouch
     List<Cart> cartList = new ArrayList<>();
     CartAdapter cartAdapter;
 
-    //Rxjava -> Collection of the disposables
-
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-    @BindView(R.id.root_layout)
-    RelativeLayout rootLayout;
-    @BindView(R.id.recycler_cart)
-    RecyclerView recycler_cart;
-    @BindView(R.id.btn_place_order)
-    Button btn_place_order;
-    //
-//    @BindView(R.id.radio_g_pemesan)RadioGroup radioGroupPemesan;
-//    private RadioButton radioPemesanButton;
-//    String pemesan;
+    @BindView(R.id.root_layout)RelativeLayout rootLayout;
+    @BindView(R.id.recycler_cart)RecyclerView recycler_cart;
+    @BindView(R.id.btn_place_order)Button btn_place_order;
     private RadioButton radioPemesanButton;
     private String pemesan;
 

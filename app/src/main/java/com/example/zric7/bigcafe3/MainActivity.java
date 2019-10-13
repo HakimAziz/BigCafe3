@@ -14,7 +14,6 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.example.zric7.bigcafe3.Model.MenuModel;
 import com.example.zric7.bigcafe3.Model.OrderValue;
@@ -92,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 }
                 getincome(selectedClass);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here

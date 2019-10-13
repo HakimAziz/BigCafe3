@@ -46,15 +46,11 @@ public class OrderMainActivity extends AppCompatActivity implements SearchView.O
     ApiInterface apiInterface;
     List<MenuModel> menuModelList = new ArrayList<>();
     OrderMainAdapter orderMainAdapter;
-
     NotificationBadge badge; //notif cart
     ImageView cart_icon;
     BottomNavigationView bottomNavigationView;
-
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
+    @BindView(R.id.recyclerView)RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

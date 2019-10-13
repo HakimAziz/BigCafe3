@@ -47,31 +47,17 @@ public class OrderDetailActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     String role_user ;
 
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-
-    @BindView(R.id.btn_checkout)
-    Button ButtonViewCheckout;
-
-    @BindView(R.id.txt_id_order)
-    TextView TextViewIdOrder;
-    @BindView(R.id.txt_vpemesan)
-    TextView TextViewPemesan;
-    @BindView(R.id.txt_total_harga)
-    TextView TextViewTotalHarga;
-    @BindView(R.id.txt_time)
-    TextView TextViewTimeStamp;
-    @BindView(R.id.txt_u_bayar)
-    TextView TextViewUBayar;
-    @BindView(R.id.txt_u_kembali)
-    TextView TextViewUKembali;
-
-    @BindView(R.id.rl_u_bayar)
-    RelativeLayout RLuBayar;
-    @BindView(R.id.rl_u_kembalian)
-    RelativeLayout RLuKembalian;
+    @BindView(R.id.recyclerView)RecyclerView recyclerView;
+    @BindView(R.id.progress_bar)ProgressBar progressBar;
+    @BindView(R.id.btn_checkout)Button ButtonViewCheckout;
+    @BindView(R.id.txt_id_order)TextView TextViewIdOrder;
+    @BindView(R.id.txt_vpemesan)TextView TextViewPemesan;
+    @BindView(R.id.txt_total_harga)TextView TextViewTotalHarga;
+    @BindView(R.id.txt_time)TextView TextViewTimeStamp;
+    @BindView(R.id.txt_u_bayar)TextView TextViewUBayar;
+    @BindView(R.id.txt_u_kembali)TextView TextViewUKembali;
+    @BindView(R.id.rl_u_bayar)RelativeLayout RLuBayar;
+    @BindView(R.id.rl_u_kembalian)RelativeLayout RLuKembalian;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
